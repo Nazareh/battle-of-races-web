@@ -5,15 +5,14 @@ import '../../containers/App.css';
 const GeneralForm = (url) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
-    const races = ['HUMAN','DWARF','NORFS','ELF','FELIX'];
+    const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
     const racesRadio = [];
 
     const handleSubmit = (event) => {
-        const newGeneral = {
+        axios.post(url.url, {
             name: generalName,
-            race: race
-        };
-        axios.post(url.url ,newGeneral)
+            race: race``
+        })
             .then((response) => {
                 console.log(response);
             }, (error) => {
@@ -38,7 +37,7 @@ const GeneralForm = (url) => {
                            name="race"
                            value={value}
                            onChange={onRaceChange}/>
-                   {' ' +capitalize(value.toLowerCase())}
+                    {' ' + capitalize(value.toLowerCase())}
 
                 </label>
             </div>)
@@ -64,8 +63,6 @@ const GeneralForm = (url) => {
                 <input type="submit" value="Submit" className='br-pill bg-light-yellow hover-bg-yellow'/>
             </div>
         </form>
-
-
     )
 };
 
