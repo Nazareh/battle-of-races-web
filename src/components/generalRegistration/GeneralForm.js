@@ -2,19 +2,20 @@ import React, {useState} from "react";
 import axios from "axios";
 import '../../containers/App.css';
 
-const GeneralForm = (url) => {
+const GeneralForm = (props) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
     const racesRadio = [];
 
     const handleSubmit = (event) => {
-        axios.post(url.url, {
+        event.preventDefault();
+        axios.post(props.url, {
             name: generalName,
-            race: race``
+            race: race
         })
             .then((response) => {
-                console.log(response);
+                props.onFinish(response.data.id);
             }, (error) => {
                 console.log(error);
             });
@@ -24,9 +25,9 @@ const GeneralForm = (url) => {
     };
 
     const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
+        if (typeof s !== 'string') return '';
         return s.charAt(0).toUpperCase() + s.slice(1)
-    }
+    };
 
 
     for (const [index, value] of races.entries()) {
