@@ -6,7 +6,7 @@ const GeneralForm = (props) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
-    const racesRadio = [];
+    const raceRenderer = [];
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,7 +15,7 @@ const GeneralForm = (props) => {
             race: race
         })
             .then((response) => {
-                props.onFinish(response.data.id);
+                props.onFinish(response.data);
             }, (error) => {
                 console.log(error);
             });
@@ -31,7 +31,7 @@ const GeneralForm = (props) => {
 
 
     for (const [index, value] of races.entries()) {
-        racesRadio.push(
+        raceRenderer.push(
             <div className='pa3 grow w4' key={index}>
                 <label>
                     <input type="radio"
@@ -57,7 +57,7 @@ const GeneralForm = (props) => {
             <div className='pa3 center yellow'>
                 <p className='b'> Choose you race</p>
                 <div className='flex flex-wrap tl '>
-                    {racesRadio}
+                    {raceRenderer}
                 </div>
             </div>
             <div className='outline pa3 link light-yellow'>
