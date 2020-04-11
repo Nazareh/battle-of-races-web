@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 const RecruitUnits = ({url, general}) => {
@@ -6,16 +6,11 @@ const RecruitUnits = ({url, general}) => {
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
 
-    function calculateMaxRecruitByResource(unitCost, totalAmount) {
-        const max = totalAmount >= unitCost ? totalAmount / unitCost : 0;
-        return Math.floor(max);
-    }
-
     function calculateMaxRecruitByUnit(unit, resources) {
         return Math.min(
-            calculateMaxRecruitByResource(unit.food, resources.food),
-            calculateMaxRecruitByResource(unit.wood, resources.wood),
-            calculateMaxRecruitByResource(unit.gold, resources.gold)
+            Math.floor(resources.food >= unit.food ? resources.food / unit.food : 0),
+            Math.floor(resources.wood >= unit.wood ? resources.wood / unit.wood : 0),
+            Math.floor(resources.gold >= unit.gold? resources.gold / unit.gold : 0),
         );
     }
 
@@ -28,56 +23,60 @@ const RecruitUnits = ({url, general}) => {
 
         unitsList
             .sort((a, b) => b.qty - a.qty)
-            .forEach(element => {
-                if (document.getElementById(element.unit.id) !== null) {
-                    if (element.qty === 0) {
-                        document.getElementById(element.unit.id).placeholder = calculateMaxRecruitByUnit(element.unit, estResources);
-                    } else {
-                        estResources.food = estResources.food - (element.unit.food * element.qty);
-                        estResources.wood = estResources.wood - (element.unit.wood * element.qty);
-                        estResources.gold = estResources.gold - (element.unit.gold * element.qty);
+            .forEach((element, index) => {
+                if (element.qty === 0 || element.qty === null || element.qty === '') {
+                    unitsList[index] = element;
+                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
+                    if(document.getElementById(element.unit.id) !== null) {
+                        document.getElementById(element.unit.id).placeholder = unitsList[index].maxQty;
+                        document.getElementById(element.unit.id).max  = unitsList[index].maxQty;
                     }
+                } else {
+                    estResources.food = estResources.food - (element.unit.food * element.qty);
+                    estResources.wood = estResources.wood - (element.unit.wood * element.qty);
+                    estResources.gold = estResources.gold - (element.unit.gold * element.qty);
+                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
                 }
             });
     }
 
     function addUnitToList(unit, qty) {
-
-        const unitQty = {
+        const newUnitQty = {
             unit: unit,
-            qty: qty || 0
+            qty: qty,
+            maxQty: qty === null ?
+                calculateMaxRecruitByUnit(unit, {
+                    food: general.food,
+                    wood: general.wood,
+                    gold: general.gold,
+                })
+                : null
         };
-        const helperArray = unitsList;
-
-        const index = helperArray.findIndex((e) => e.unit.id === unit.id);
-
+        const index = unitsList.findIndex((e) => e.unit.id === unit.id);
         if (index === -1) {
-            helperArray.push(unitQty);
+            unitsList.push(newUnitQty);
         } else {
-            helperArray[index] = unitQty;
+            unitsList[index] = newUnitQty;
         }
-        setUnitsList(helperArray);
-        updatePlaceholders()
+        updatePlaceholders();
     }
 
     async function getData() {
         if (general !== null) {
             const response = await axios.get(url + "/" + general.race);
-
             for (const [index, unit] of response.data.entries()) {
-                addUnitToList(unit, 0);
+                addUnitToList(unit, null);
                 divs.push(
                     <div className='pa3' key={index}>
                         <label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label>
-                        <input className='w2 ph3' type="number"
+                        <input className='w4 ph3' type='number'
                                id={unit.id}
                                name={unit.name}
-                               placeholder={calculateMaxRecruitByUnit(unit, {
-                                   food: general.food,
-                                   wood: general.wood,
-                                   gold: general.gold,
-                               })}
-                               onChange={event => addUnitToList(unit, event.target.value)}
+                               min={'0'}
+                               value={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].qty}
+                               placeholder={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].maxQty}
+                               onChange={event => {addUnitToList(unit, event.target.value);
+                               }}
                                size={2}
                         />
                     </div>
@@ -89,7 +88,7 @@ const RecruitUnits = ({url, general}) => {
 
     useEffect(() => {
         getData();
-    }, [general, unitsList]);
+    }, [general]);
     return (
         <form className='flex flex-wrap' name={'recruitForm'}>
             {unitsRenderer}

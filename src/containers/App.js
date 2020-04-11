@@ -15,7 +15,7 @@ function App() {
 
     return (
         <div className="App">
-            {/*<Navigaviton/>*/}
+            {/*<Navigation/>*/}
             {/*<Resources/>*/}
             <GeneralForm url={generalFormUrl} onFinish={updateGeneral}/>
             {/*<Workers/>*/}
