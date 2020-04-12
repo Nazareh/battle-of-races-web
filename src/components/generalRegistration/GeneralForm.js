@@ -47,21 +47,30 @@ const GeneralForm = (props) => {
     return (
 
         <form onSubmit={handleSubmit}
-              className='app-bd flex flex-column w-auto light-yellow'>
-            <div className='outline grow pa3 '>
-                <input type="text" value={generalName}
-                       placeholder="General name" className="h2-l bg-light-yellow"
-                       onChange={e => setGeneralName(e.target.value)}
-                />
+              className='outline flex flex-column w-auto'>
+            <div className="measure pa3 tl">
+                <label htmlFor="name" className="f6 b db mb2">
+                    General name
+                </label>
+                <input
+                    id="name"
+                    className="input-reset ba b--black-20 pa2 mb2 db w-100"
+                    type="text"
+                    value={generalName}
+                    onChange={e => setGeneralName(e.target.value)}
+                    aria-describedby="name-desc"/>
+                <small id="name-desc" className="f6 black-60 db mb2">
+                    How others should call you?
+                </small>
             </div>
-            <div className='pa3 center yellow'>
+            <div className='pa3 center'>
                 <p className='b'> Choose you race</p>
                 <div className='flex flex-wrap tl '>
                     {raceRenderer}
                 </div>
             </div>
-            <div className='outline pa3 link light-yellow'>
-                <input type="submit" value="Submit" className='br-pill bg-light-yellow hover-bg-yellow'/>
+            <div className='pa3 link'>
+                <input type="submit" value="Create"/>
             </div>
         </form>
     )

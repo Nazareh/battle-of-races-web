@@ -69,7 +69,7 @@ const RecruitUnits = ({url, general}) => {
                 divs.push(
                     <div className='pa3' key={index}>
                         <label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label>
-                        <input className='w4 ph3' type='number'
+                        <input className='w4 ph3 ' type='number'
                                id={unit.id}
                                name={unit.name}
                                min={'0'}
@@ -89,10 +89,19 @@ const RecruitUnits = ({url, general}) => {
     useEffect(() => {
         getData();
     }, [general]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(event.currentTarget.value)
+    }
     return (
-        <form className='flex flex-wrap' name={'recruitForm'}>
-            {unitsRenderer}
+        <form className='flex flex-column'  onSubmit={handleSubmit}>
+            <div className='flex flex-wrap'>
+                {unitsRenderer}
+            </div>
+            <input className='w-10 center' type='submit' value="Build"/>
         </form>
+
     );
 };
 
