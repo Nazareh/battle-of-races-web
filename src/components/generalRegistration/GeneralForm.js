@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import '../../containers/App.css';
 
-const GeneralForm = ({url, onGeneralCreated, onArmiesCreated}) => {
+const GeneralForm = ({postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCreated}) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
@@ -10,7 +10,7 @@ const GeneralForm = ({url, onGeneralCreated, onArmiesCreated}) => {
 
     const getArmies = (generalId) => {
         const armies = [];
-        axios.get("http://localhost:8080/api/v1/armies/generals/" + generalId)
+        axios.get(getArmiesUrl + generalId)
             .then(
                 response => {
                     response.data
@@ -21,7 +21,7 @@ const GeneralForm = ({url, onGeneralCreated, onArmiesCreated}) => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(url, {
+        axios.post(postGeneralUrl, {
             name: generalName,
             race: race
         })

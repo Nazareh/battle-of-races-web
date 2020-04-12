@@ -92,7 +92,6 @@ const RecruitUnits = ({url, general,armies}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(armies);
     }
     return (
         <form className='flex flex-column'  onSubmit={handleSubmit}>

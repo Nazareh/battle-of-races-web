@@ -5,8 +5,11 @@ import './App.css';
 
 function App() {
     const baseUrl = 'http://localhost:8080/api/v1/';
-    const generalFormUrl = baseUrl + 'generals';
-    const unitsUrl = baseUrl + 'units';
+    const urls = {
+        postGeneral: baseUrl + 'generals',
+        getRaceUnits : baseUrl + 'units',
+        getArmies : baseUrl + 'armies/generals/'
+    };
     const [general, setGeneral] = React.useState(null);
     const [armies, setArmies] = React.useState(null);
 
@@ -22,11 +25,17 @@ function App() {
         <div className="App">
             {/*<Navigation/>*/}
             {/*<Resources/>*/}
-            <GeneralForm url={generalFormUrl}
+            <GeneralForm postGeneralUrl={urls.postGeneral}
+                         getArmiesUrl={urls.getArmies}
                          onGeneralCreated={updateGeneral}
                          onArmiesCreated={updateArmies}/>
             {/*<Workers/>*/}
-            <RecruitUnits url={unitsUrl} general={general} armies={armies}/>
+
+            <RecruitUnits url={urls.getRaceUnits}
+                          general={general}
+                          armies={armies}/>
+
+            {/*<RecruitUnits url={urls.getRaceUnits} general={armies.general.id} armies={armies}/>*/}
         </div>
     );
 }
