@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const RecruitUnits = ({url, general}) => {
+const RecruitUnits = ({url, general,armies}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
@@ -61,8 +61,7 @@ const RecruitUnits = ({url, general}) => {
         updatePlaceholders();
     }
 
-    async function getData() {
-        if (general !== null) {
+    async function getAllRaceUnits() {
             const response = await axios.get(url + "/" + general.race);
             for (const [index, unit] of response.data.entries()) {
                 addUnitToList(unit, null);
@@ -83,16 +82,17 @@ const RecruitUnits = ({url, general}) => {
                 )
             }
             setUnitsRenderer(divs);
-        }
     }
 
     useEffect(() => {
-        getData();
+        if (general !== null) {
+            getAllRaceUnits();
+        }
     }, [general]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(event.currentTarget.value)
+        console.log(armies);
     }
     return (
         <form className='flex flex-column'  onSubmit={handleSubmit}>

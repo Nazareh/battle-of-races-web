@@ -8,18 +8,25 @@ function App() {
     const generalFormUrl = baseUrl + 'generals';
     const unitsUrl = baseUrl + 'units';
     const [general, setGeneral] = React.useState(null);
+    const [armies, setArmies] = React.useState(null);
 
     function updateGeneral(newValue) {
         setGeneral(newValue);
+    }
+
+    function updateArmies(newValue) {
+          setArmies(newValue);
     }
 
     return (
         <div className="App">
             {/*<Navigation/>*/}
             {/*<Resources/>*/}
-            <GeneralForm url={generalFormUrl} onFinish={updateGeneral}/>
+            <GeneralForm url={generalFormUrl}
+                         onGeneralCreated={updateGeneral}
+                         onArmiesCreated={updateArmies}/>
             {/*<Workers/>*/}
-            <RecruitUnits url={unitsUrl} general={general}/>
+            <RecruitUnits url={unitsUrl} general={general} armies={armies}/>
         </div>
     );
 }
