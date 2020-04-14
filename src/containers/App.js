@@ -8,7 +8,8 @@ function App() {
     const urls = {
         postGeneral: baseUrl + 'generals',
         getRaceUnits : baseUrl + 'units',
-        getArmies : baseUrl + 'armies/generals/'
+        getArmies : baseUrl + 'armies/generals/',
+        postArmyUnits : baseUrl + 'armyunits/'
     };
     const [general, setGeneral] = React.useState(null);
     const [armies, setArmies] = React.useState(null);
@@ -31,11 +32,11 @@ function App() {
                          onArmiesCreated={updateArmies}/>
             {/*<Workers/>*/}
 
-            <RecruitUnits url={urls.getRaceUnits}
+            <RecruitUnits getRaceUnitsUrl={urls.getRaceUnits}
+                          postArmyUnitsUrl={urls.postArmyUnits}
                           general={general}
                           armies={armies}/>
 
-            {/*<RecruitUnits url={urls.getRaceUnits} general={armies.general.id} armies={armies}/>*/}
         </div>
     );
 }
