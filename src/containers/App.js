@@ -8,10 +8,10 @@ import './App.css';
 function App() {
     const baseUrl = 'http://192.168.20.97:8080/api/v1/';
     const urls = {
-        postGeneral: baseUrl + 'generals',
-        getRaceUnits : baseUrl + 'units',
-        getArmies : baseUrl + 'armies/generals/',
-        postArmyUnits : baseUrl + 'armyunits/'
+        general: baseUrl + 'generals',
+        units : baseUrl + 'units',
+        generalArmies : baseUrl + 'armies/generals/',
+        armyUnits : baseUrl + 'armyunits/'
     };
 
 
@@ -20,7 +20,7 @@ function App() {
     const [armies, setArmies] = React.useState(null);
 
     function updateGeneral(generalId) {
-        axios.get(urls.postGeneral + '/' + generalId)
+        axios.get(urls.general + '/' + generalId)
             .then(response => {
                 setGeneral(response.data);
                 console.log(response.data);
@@ -38,15 +38,15 @@ function App() {
             <Resources general={general}/>
 
             <GeneralForm visible = {true}
-                         postGeneralUrl={urls.postGeneral}
-                         getArmiesUrl={urls.getArmies}
+                         postGeneralUrl={urls.general}
+                         getArmiesUrl={urls.generalArmies}
                          onGeneralCreated={updateGeneral}
                          onArmiesCreated={updateArmies}/>
             {/*<Workers/>*/}
 
             <RecruitUnits visible = {false}
-                          getRaceUnitsUrl={urls.getRaceUnits}
-                          postArmyUnitsUrl={urls.postArmyUnits}
+                          getRaceUnitsUrl={urls.units}
+                          postArmyUnitsUrl={urls.armyUnits}
                           general={general}
                           armies={armies}
                           onArmiesChanged={updateGeneral}/>
