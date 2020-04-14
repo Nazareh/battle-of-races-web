@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
+const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies,onArmiesChanged}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
@@ -63,7 +63,9 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
     }
 
     async function getAllRaceUnits() {
+
         const response = await axios.get(getRaceUnitsUrl + "/" + general.race);
+
         for (const [index, unit] of response.data.entries()) {
             addUnitToList(unit, null);
             divs.push(
@@ -102,8 +104,15 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
             qty: element.qty
         }));
         axios.post(postArmyUnitsUrl, armyUnitsList)
-            .then(response => console.log(response.data));
+            .then(response => {
+                unitsList.forEach(element => {
+                    element.qty = null;
+                    document.getElementById(element.unit.id).value = null
+                } );
+                onArmiesChanged(general.id);
+            });
     };
+
     if (!isVisible) {
         return null;
     } else {

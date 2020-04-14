@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import GeneralForm from "../components/generalRegistration/GeneralForm";
 import RecruitUnits from "../components/recruitUnits/RecruitUnits";
 import Resources from "../components/resources/Resources"
@@ -18,8 +19,12 @@ function App() {
     const [general, setGeneral] = React.useState(null);
     const [armies, setArmies] = React.useState(null);
 
-    function updateGeneral(newValue) {
-        setGeneral(newValue);
+    function updateGeneral(generalId) {
+        axios.get(urls.postGeneral + '/' + generalId)
+            .then(response => {
+                setGeneral(response.data);
+                console.log(response.data);
+            });
     }
 
     function updateArmies(newValue) {
@@ -31,6 +36,7 @@ function App() {
         <div className="App">
             {/*<Navigation/>*/}
             <Resources general={general}/>
+
             <GeneralForm visible = {true}
                          postGeneralUrl={urls.postGeneral}
                          getArmiesUrl={urls.getArmies}
@@ -38,11 +44,12 @@ function App() {
                          onArmiesCreated={updateArmies}/>
             {/*<Workers/>*/}
 
-            <RecruitUnits visible = {true}
+            <RecruitUnits visible = {false}
                           getRaceUnitsUrl={urls.getRaceUnits}
                           postArmyUnitsUrl={urls.postArmyUnits}
                           general={general}
-                          armies={armies}/>
+                          armies={armies}
+                          onArmiesChanged={updateGeneral}/>
 
         </div>
     );
