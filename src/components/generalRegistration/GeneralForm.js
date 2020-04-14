@@ -1,12 +1,19 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import axios from "axios";
 import '../../containers/App.css';
 
-const GeneralForm = ({postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCreated}) => {
+export const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCreated}) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
     const raceRenderer = [];
+    const [isVisible, setVisibility] = useState(null);
+
+    useEffect(() => {
+        setVisibility(visible); // update the state
+    }, [visible]);
+
+    if (!isVisible) {return null};
 
     const getArmies = (generalId) => {
         const armies = [];
@@ -28,6 +35,8 @@ const GeneralForm = ({postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCre
             .then((response) => {
                 onGeneralCreated(response.data);
                 getArmies(response.data.id);
+                setVisibility(false)
+
             }, (error) => {
                 console.log(error);
             });
@@ -87,5 +96,3 @@ const GeneralForm = ({postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCre
         </form>
     )
 };
-
-export default GeneralForm;

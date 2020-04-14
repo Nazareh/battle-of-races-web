@@ -5,6 +5,7 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
+    const [isVisible, setVisibility] = useState(null);
 
     function calculateMaxRecruitByUnit(unit, resources) {
         return Math.min(
@@ -81,13 +82,14 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
             )
         }
         setUnitsRenderer(divs);
+        setVisibility(true);
     }
 
     useEffect(() => {
         if (general !== null) {
             getAllRaceUnits();
         }
-    }, [general]);
+    }, [general,isVisible]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -99,19 +101,20 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies}) => {
             },
             qty: element.qty
         }));
-        axios.post(postArmyUnitsUrl + armies[0], armyUnitsList)
+        axios.post(postArmyUnitsUrl, armyUnitsList)
             .then(response => console.log(response.data));
     };
-
+    if (!isVisible) {
+        return null;
+    } else {
     return (
-        <form className='flex flex-column' onSubmit={handleSubmit}>
-            <div className='flex flex-wrap'>
-                {unitsRenderer}
-            </div>
-            <input className='w-10 center' type='submit' value="Build"/>
-        </form>
-
-    );
+               <form className='flex flex-column' onSubmit={handleSubmit}>
+                   <div className='flex flex-wrap'>
+                       {unitsRenderer}
+                   </div>
+                   <input className='w-10 center' type='submit' value="Build"/>
+               </form>
+           );}
 };
 
 export default RecruitUnits;
