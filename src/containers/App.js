@@ -34,7 +34,6 @@ function App() {
         axios.get(urls.armyUnits + '/' + armies[0])
             .then(response => {
                 setArmyUnits(response.data);
-                console.log('updateArmyUnits', response.data);
             });
     }
 
@@ -54,7 +53,9 @@ function App() {
                          updateGeneral={updateGeneral}
                          updateArmies={updateArmies}/>
             {/*<Workers/>*/}
-            <Dashboard armyUnits={armyUnits}/>
+            <Dashboard armyUnits={armyUnits}
+                       unitstUrl={urls.units}
+                       general={general}/>
 
             <RecruitUnits visible = {recruitUnitsView}
                           getRaceUnitsUrl={urls.units}

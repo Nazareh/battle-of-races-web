@@ -64,7 +64,7 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
 
     async function loadForm() {
 
-        const response = await axios.get(getRaceUnitsUrl + "/" + general.race);
+        const response = await axios.get(getRaceUnitsUrl + "/race/" + general.race);
 
         for (const [index, unit] of response.data.entries()) {
             addUnitToList(unit, null);
