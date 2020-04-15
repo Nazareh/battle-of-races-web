@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies,onArmiesChanged}) => {
+const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updateGeneral, armies,updateArmyUnits}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
-    const [isVisible, setVisibility] = useState(null);
+    const [isVisible, setVisibility] = useState(visible);
 
     function calculateMaxRecruitByUnit(unit, resources) {
         return Math.min(
@@ -62,7 +62,7 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies,onArmi
         updatePlaceholders();
     }
 
-    async function getAllRaceUnits() {
+    async function loadForm() {
 
         const response = await axios.get(getRaceUnitsUrl + "/" + general.race);
 
@@ -89,7 +89,7 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies,onArmi
 
     useEffect(() => {
         if (general !== null) {
-            getAllRaceUnits();
+            loadForm();
         }
     }, [general,isVisible]);
 
@@ -103,13 +103,15 @@ const RecruitUnits = ({getRaceUnitsUrl, postArmyUnitsUrl, general, armies,onArmi
             },
             qty: element.qty
         }));
+
         axios.post(postArmyUnitsUrl, armyUnitsList)
             .then(response => {
                 unitsList.forEach(element => {
                     element.qty = null;
                     document.getElementById(element.unit.id).value = null
                 } );
-                onArmiesChanged(general.id);
+                updateGeneral(general.id);
+                updateArmyUnits(armies)
             });
     };
 

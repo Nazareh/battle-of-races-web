@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from "react";
 import axios from "axios";
-import '../../containers/App.css';
+import '../containers/App.css';
 
-const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, onGeneralCreated, onArmiesCreated}) => {
+const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updateArmies}) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
@@ -22,10 +22,11 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, onGeneralCreated, on
                 response => {
                     response.data
                         .forEach(army => armies.push(army.id));
-                    onArmiesCreated(armies);
+                    updateArmies(armies);
                 });
 
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post(postGeneralUrl, {
@@ -33,7 +34,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, onGeneralCreated, on
             race: race
         })
             .then((response) => {
-                onGeneralCreated(response.data.id);
+                updateGeneral(response.data.id);
                 getArmies(response.data.id);
                 setVisibility(false)
 
