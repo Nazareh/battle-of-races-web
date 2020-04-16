@@ -17,16 +17,21 @@ function App() {
 
     const [generalView, setgeneralView] = React.useState(true);
     const [recruitUnitsView, setRecruitUnitsView] = React.useState(false);
+    const [dashboardView, setDashboardView] = React.useState(false);
     const [general, setGeneral] = React.useState(null);
     const [armies, setArmies] = React.useState(null);
     const [armyUnits, setArmyUnits] = React.useState(null);
 
-    function updateGeneral(generalId) {
+    async function updateGeneral(generalId) {
         if (generalId !== null ) {
-            axios.get(urls.general + '/' + generalId)
-                .then(response => {
-                    setGeneral(response.data);
-                });
+            const generalResponse = await axios.get(urls.general + '/' + generalId);
+            setGeneral(generalResponse.data);
+
+            const armiesResponse =  await axios.get(urls.generalArmies + generalId);
+
+            updateArmyUnits(
+                armiesResponse.data.map(army => army.id)
+            );
         }
     }
 
@@ -53,7 +58,8 @@ function App() {
                          updateGeneral={updateGeneral}
                          updateArmies={updateArmies}/>
             {/*<Workers/>*/}
-            <Dashboard armyUnits={armyUnits}
+            <Dashboard visible = {generalView}
+                       armyUnits={armyUnits}
                        unitstUrl={urls.units}
                        general={general}/>
 

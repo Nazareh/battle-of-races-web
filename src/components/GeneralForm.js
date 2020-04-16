@@ -59,6 +59,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
                     <input type="radio"
                            name="race"
                            value={value}
+                           disabled={value==="HUMAN" ? false : true}
                            onChange={onRaceChange}/>
                     {' ' + capitalize(value.toLowerCase())}
 
@@ -92,7 +93,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
                 </div>
             </div>
             <div className='pa3 link'>
-                <input type="submit" value="Create"/>
+                <input type="submit" name="submit" value="Submit3"/>
             </div>
         </form>
     )

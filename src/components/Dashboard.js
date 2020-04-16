@@ -1,8 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const Dashboard = ({armyUnits, unitstUrl, general}) => {
+const Dashboard = ({visible, armyUnits, unitstUrl, general}) => {
     const [rows, setRows] = React.useState([]);
+    const [isVisible, setVisibility] = useState(visible);
     const tempRows =[];
 
     async function populateRows () {
@@ -29,11 +30,12 @@ const Dashboard = ({armyUnits, unitstUrl, general}) => {
     useEffect(() => {
    if (armyUnits !== null){
         populateRows();
+       setVisibility(true);
        }
 
- },[armyUnits]);
+ },[armyUnits,isVisible]);
 
-    if (armyUnits === null){
+    if (armyUnits === null || !visible) {
             return (null);
         }
         else{
