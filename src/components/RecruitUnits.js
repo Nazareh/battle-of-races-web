@@ -69,9 +69,9 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
         for (const [index, unit] of response.data.entries()) {
             addUnitToList(unit, null);
             divs.push(
-                <div className='pa3' key={index}>
-                    <label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label>
-                    <input className='w4 ph3 ' type='number'
+                <div className='pa3 w20 justify-between' key={index}>
+                    <div> <label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label> </div>
+                        <div> <input className='w4 center ph2' type='number'
                            id={unit.id}
                            name={unit.name}
                            min={'0'}
@@ -80,6 +80,7 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
                            onChange={event => addUnitToList(unit, event.target.value)}
                            size={2}
                     />
+                            </div>
                 </div>
             )
         }
@@ -119,11 +120,13 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
         return null;
     } else {
     return (
-               <form className='flex flex-column' onSubmit={handleSubmit}>
+               <form className='outline flex flex-column' onSubmit={handleSubmit}>
                    <div className='flex flex-wrap'>
                        {unitsRenderer}
                    </div>
-                   <input className='w-10 center' type='submit' value="Build"/>
+                   <div className='pa3'>
+                   <input className='w-25 center' type='submit' value="Train"/>
+                   </div>
                </form>
            );}
 };

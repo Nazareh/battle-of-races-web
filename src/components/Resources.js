@@ -4,8 +4,8 @@ const Resources = ({general}) => {
 
     if (general !== null) {
         return (
-            <div className='flex justify-center'>
-                <div className='ph5'>
+            <div className='flex justify-center outline'>
+                <div className='ph3'>
                     <p> {general.name} </p>
                 </div>
                 <div className='flex justify-center'>

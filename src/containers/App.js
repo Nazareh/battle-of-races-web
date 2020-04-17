@@ -1,18 +1,19 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import axios from "axios";
 import GeneralForm from "../components/GeneralForm";
 import RecruitUnits from "../components/RecruitUnits";
 import Resources from "../components/Resources"
 import Dashboard from "../components/Dashboard";
+import Login from "../components/login/Login";
 import './App.css';
 
 function App() {
     const baseUrl = 'http://192.168.20.97:8080/api/v1/';
     const urls = {
         general: baseUrl + 'generals',
-        units : baseUrl + 'units',
-        generalArmies : baseUrl + 'armies/generals/',
-        armyUnits : baseUrl + 'armyunits/'
+        units: baseUrl + 'units',
+        generalArmies: baseUrl + 'armies/generals/',
+        armyUnits: baseUrl + 'armyunits/'
     };
 
     const [generalView, setgeneralView] = React.useState(true);
@@ -23,11 +24,11 @@ function App() {
     const [armyUnits, setArmyUnits] = React.useState(null);
 
     async function updateGeneral(generalId) {
-        if (generalId !== null ) {
+        if (generalId !== null) {
             const generalResponse = await axios.get(urls.general + '/' + generalId);
             setGeneral(generalResponse.data);
 
-            const armiesResponse =  await axios.get(urls.generalArmies + generalId);
+            const armiesResponse = await axios.get(urls.generalArmies + generalId);
 
             updateArmyUnits(
                 armiesResponse.data.map(army => army.id)
@@ -43,33 +44,34 @@ function App() {
     }
 
     function updateArmies(newValue) {
-          setArmies(newValue);
-          setRecruitUnitsView(true);
+        setArmies(newValue);
+        setRecruitUnitsView(true);
     }
 
     return (
         <div className="App">
             {/*<Navigation/>*/}
+            <Login/>
             <Resources general={general}/>
 
-            <GeneralForm visible = {generalView}
-                         postGeneralUrl={urls.general}
-                         getArmiesUrl={urls.generalArmies}
-                         updateGeneral={updateGeneral}
-                         updateArmies={updateArmies}/>
-            {/*<Workers/>*/}
-            <Dashboard visible = {generalView}
-                       armyUnits={armyUnits}
-                       unitstUrl={urls.units}
-                       general={general}/>
+                    <GeneralForm visible={generalView}
+                                 postGeneralUrl={urls.general}
+                                 getArmiesUrl={urls.generalArmies}
+                                 updateGeneral={updateGeneral}
+                                 updateArmies={updateArmies}/>
+                    {/*<Workers/>*/}
+                    <Dashboard visible={generalView}
+                               armyUnits={armyUnits}
+                               unitstUrl={urls.units}
+                               general={general}/>
 
-            <RecruitUnits visible = {recruitUnitsView}
-                          getRaceUnitsUrl={urls.units}
-                          postArmyUnitsUrl={urls.armyUnits}
-                          general={general}
-                          armies={armies}
-                          updateGeneral={updateGeneral}
-                          updateArmyUnits={updateArmyUnits}/>
+                    <RecruitUnits visible={recruitUnitsView}
+                                  getRaceUnitsUrl={urls.units}
+                                  postArmyUnitsUrl={urls.armyUnits}
+                                  general={general}
+                                  armies={armies}
+                                  updateGeneral={updateGeneral}
+                                  updateArmyUnits={updateArmyUnits}/>
 
         </div>
     );

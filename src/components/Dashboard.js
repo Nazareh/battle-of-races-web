@@ -13,7 +13,7 @@ const Dashboard = ({visible, armyUnits, unitstUrl, general}) => {
       .sort((a, b) => a.id.unitId - b.id.unitId)
       .forEach((element,index) => {
         const name = response.data
-                   .filter(unit => unit.id == element.id.unitId)
+                   .filter(unit => unit.id === element.id.unitId)
                     .map(filteredUnit => filteredUnit.name);
 
         tempRows.push(
@@ -40,9 +40,9 @@ const Dashboard = ({visible, armyUnits, unitstUrl, general}) => {
         }
         else{
           return (
-              <div className="pa4">
+              <div className="pa4 outline ">
                    <div className="overflow-auto">
-                       <table className="f6 w-20 mw8 left" cellSpacing="0">
+                       <table className="f6 w20 mw8 left" cellSpacing="0">
                            <thead>
                            <tr>
                                <th className="fw6 bb b--black-20 tl pb3 pr3 bg-white">Unit</th>

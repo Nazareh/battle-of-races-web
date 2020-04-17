@@ -40,6 +40,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
 
             }, (error) => {
                 console.log(error);
+                alert(error)
             });
     };
     const onRaceChange = (event) => {
@@ -92,7 +93,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
                     {raceRenderer}
                 </div>
             </div>
-            <div className='pa3 link'>
+            <div className='pa3'>
                 <input type="submit" name="submit" value="Submit3"/>
             </div>
         </form>
