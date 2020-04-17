@@ -1,47 +1,36 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 
-import TwitterLogin from 'react-twitter-auth';
+// import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
-import { GoogleLogin } from 'react-google-login';
+// import {GoogleLogin} from 'react-google-login';
 import config from '../../config.json';
 import './Login.css';
 
-const Login = () =>{
-    const [isAuthenticated,setIsAuthenticated] = useState(false);
-    const [user,setUser] = useState({email : ''});
-    const [token,setToken] = useState('false');
+const Login = ({isAuthenticated, login, logout}) => {
+    // const onFailure = (error) => {
+    //     alert(error);
+    // }
+    // const twitterResponse = (e) => {
+    // };
+    // const googleResponse = (e) => {
+    // };
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        setToken('');
-        setUser(null);
+    const facebookResponse = async (response) => {
+        login({
+            authenticated: true,
+            email: response.email
+        })
     };
-    const onFailure = (error) => {
-        alert(error);
-    }
-    const twitterResponse = (e) => {};
-
-     const facebookResponse = async (response) => {
-         await setIsAuthenticated(true);
-         await setToken(response.accessToken);
-         const usuario = response;
-          await setUser({
-            name: response.name ,
-            email: response.email}
-            );
-    };
-
 
     useEffect(() => {
-    },[user]);
+    }, [isAuthenticated]);
 
-    const googleResponse = (e) => {};
-    return(
+    return (
         !!isAuthenticated ?
             <div className="flex justify-end">
-                    <button onClick={logout} className="loginBtn loginBtn--logout">
-                        Log out
-                    </button>
+                <button onClick={logout} className="loginBtn loginBtn--logout">
+                    Log out
+                </button>
             </div>
             :
             <div className="flex justify-end">
@@ -54,12 +43,12 @@ const Login = () =>{
                     fields="name,email,picture"
                     callback={facebookResponse}
                     cssClass="loginBtn loginBtn--facebook"/>
-                <GoogleLogin
-                    clientId="XXXXXXXXXX"
-                    buttonText="Login"
-                    onSuccess={googleResponse}
-                    onFailure={googleResponse}
-                    />
+                {/*<GoogleLogin*/}
+                {/*    clientId="XXXXXXXXXX"*/}
+                {/*    buttonText="Login"*/}
+                {/*    onSuccess={googleResponse}*/}
+                {/*    onFailure={googleResponse}*/}
+                {/*    />*/}
             </div>
     )
 };

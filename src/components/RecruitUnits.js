@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updateGeneral, armies,updateArmyUnits}) => {
+const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, general, updateGeneral, armies, updateArmyUnits}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
-    const [unitsList, setUnitsList] = useState([]);
+    const unitsList = []
     const divs = [];
-    const [isVisible, setVisibility] = useState(visible);
 
     function calculateMaxRecruitByUnit(unit, resources) {
         return Math.min(
@@ -59,44 +58,48 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
         } else {
             unitsList[index] = newUnitQty;
         }
+        unitsList.sort((a, b) => b.qty - a.qty);
         updatePlaceholders();
     }
 
-    async function loadForm() {
+    function loadForm() {
 
-        const response = await axios.get(getRaceUnitsUrl + "/race/" + general.race);
+        axios.get(getRaceUnitsUrl + "/race/" + general.race).then(response => {
 
-        for (const [index, unit] of response.data.entries()) {
-            addUnitToList(unit, null);
-            divs.push(
-                <div className='pa3 w20 justify-between' key={index}>
-                    <div> <label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label> </div>
-                        <div> <input className='w4 center ph2' type='number'
-                           id={unit.id}
-                           name={unit.name}
-                           min={'0'}
-                           value={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].qty}
-                           placeholder={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].maxQty}
-                           onChange={event => addUnitToList(unit, event.target.value)}
-                           size={2}
-                    />
+                for (const [index, unit] of response.data.entries()) {
+                    addUnitToList(unit, null);
+                    divs.push(
+                        <div className='pa3 w20 justify-between' key={index}>
+                            <div><label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label></div>
+                            <div><input className='w4 center ph2' type='number'
+                                        id={unit.id}
+                                        name={unit.name}
+                                        min={'0'}
+                                value={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].qty}
+                                placeholder={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].maxQty}
+                                onChange={event => addUnitToList(unit, event.target.value)}
+                                        size={2}
+                            />
                             </div>
-                </div>
-            )
-        }
-        setUnitsRenderer(divs);
-        setVisibility(true);
+                        </div>
+                    )
+                }
+                setUnitsRenderer(divs);
+            }
+        )
+
     }
 
     useEffect(() => {
         if (general !== null) {
             loadForm();
         }
-    }, [general,isVisible]);
+    }, [general]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const armyUnitsList = [];
+
         unitsList.forEach(element => armyUnitsList.push({
             id: {
                 unitId: element.unit.id,
@@ -104,31 +107,32 @@ const RecruitUnits = ({visible, getRaceUnitsUrl, postArmyUnitsUrl, general,updat
             },
             qty: element.qty
         }));
-
+        console.log('unitsList',unitsList);
+        console.log(postArmyUnitsUrl,armyUnitsList);
         axios.post(postArmyUnitsUrl, armyUnitsList)
             .then(response => {
                 unitsList.forEach(element => {
                     element.qty = null;
                     document.getElementById(element.unit.id).value = null
-                } );
+                });
                 updateGeneral(general.id);
                 updateArmyUnits(armies)
             });
     };
 
-    if (!isVisible) {
-        return null;
-    } else {
     return (
-               <form className='outline flex flex-column' onSubmit={handleSubmit}>
-                   <div className='flex flex-wrap'>
-                       {unitsRenderer}
-                   </div>
-                   <div className='pa3'>
-                   <input className='w-25 center' type='submit' value="Train"/>
-                   </div>
-               </form>
-           );}
+        !!isAuthenticated ?
+            <form className='outline flex flex-column' onSubmit={handleSubmit}>
+                <div className='flex flex-wrap'>
+                    {unitsRenderer}
+                </div>
+                <div className='pa3'>
+                    <input className='w-25 center' type='submit' value="Train"/>
+                </div>
+            </form>
+            :
+            <div></div>
+    );
 };
 
 export default RecruitUnits;

@@ -1,19 +1,12 @@
-import React, {useState,useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import '../containers/App.css';
 
-const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updateArmies}) => {
+const GeneralForm = ({general, postGeneralUrl,getArmiesUrl, updateGeneral, updateArmies,userEmail}) => {
     const [generalName, setGeneralName] = useState("");
     const [race, setRace] = useState(null);
     const races = ['HUMAN', 'DWARF', 'NORFS', 'ELF', 'FELIX'];
     const raceRenderer = [];
-    const [isVisible, setVisibility] = useState(null);
-
-    useEffect(() => {
-        setVisibility(visible); // update the state
-    }, [visible]);
-
-    if (!isVisible) {return null};
 
     const getArmies = (generalId) => {
         const armies = [];
@@ -31,15 +24,13 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
         event.preventDefault();
         axios.post(postGeneralUrl, {
             name: generalName,
-            race: race
+            race: race,
+            email: userEmail
         })
             .then((response) => {
                 updateGeneral(response.data.id);
                 getArmies(response.data.id);
-                setVisibility(false)
-
             }, (error) => {
-                console.log(error);
                 alert(error)
             });
     };
@@ -60,7 +51,7 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
                     <input type="radio"
                            name="race"
                            value={value}
-                           disabled={value==="HUMAN" ? false : true}
+                           disabled={value !== "HUMAN"}
                            onChange={onRaceChange}/>
                     {' ' + capitalize(value.toLowerCase())}
 
@@ -69,34 +60,36 @@ const GeneralForm = ({visible, postGeneralUrl,getArmiesUrl, updateGeneral, updat
     }
 
     return (
-
-        <form onSubmit={handleSubmit}
-              className='outline flex flex-column w-auto'>
-            <div className="measure pa3 tl">
-                <label htmlFor="name" className="f6 b db mb2">
-                    General name
-                </label>
-                <input
-                    id="name"
-                    className="input-reset ba b--black-20 pa2 mb2 db w-100"
-                    type="text"
-                    value={generalName}
-                    onChange={e => setGeneralName(e.target.value)}
-                    aria-describedby="name-desc"/>
-                <small id="name-desc" className="f6 black-60 db mb2">
-                    How others should call you?
-                </small>
-            </div>
-            <div className='pa3 center'>
-                <p className='b'> Choose you race</p>
-                <div className='flex flex-wrap tl '>
-                    {raceRenderer}
+      !general && !!userEmail ?
+            <form onSubmit={handleSubmit}
+                  className='outline flex flex-column w-auto'>
+                <div className="measure pa3 tl">
+                    <label htmlFor="name" className="f6 b db mb2">
+                        General name
+                    </label>
+                    <input
+                        id="name"
+                        className="input-reset ba b--black-20 pa2 mb2 db w-100"
+                        type="text"
+                        value={generalName}
+                        onChange={e => setGeneralName(e.target.value)}
+                        aria-describedby="name-desc"/>
+                    <small id="name-desc" className="f6 black-60 db mb2">
+                        How others should call you?
+                    </small>
                 </div>
-            </div>
-            <div className='pa3'>
-                <input type="submit" name="submit" value="Submit3"/>
-            </div>
-        </form>
+                <div className='pa3 center'>
+                    <p className='b'> Choose you race</p>
+                    <div className='flex flex-wrap tl '>
+                        {raceRenderer}
+                    </div>
+                </div>
+                <div className='pa3'>
+                    <input type="submit" name="submit" value="Submit3"/>
+                </div>
+            </form>
+            :
+            <div>{generalName}</div>
     )
 };
 
