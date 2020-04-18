@@ -3,64 +3,14 @@ import axios from "axios";
 
 const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, general, updateGeneral, armies, updateArmyUnits}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
-    const unitsList = []
+    const [unitsList, setUnitsList] = useState([]);
     const divs = [];
 
-    function calculateMaxRecruitByUnit(unit, resources) {
-        return Math.min(
-            Math.floor(resources.food >= unit.food ? resources.food / unit.food : 0),
-            Math.floor(resources.wood >= unit.wood ? resources.wood / unit.wood : 0),
-            Math.floor(resources.gold >= unit.gold ? resources.gold / unit.gold : 0),
-        );
-    }
-
-    function updatePlaceholders() {
-        const estResources = {
-            food: general.food,
-            wood: general.wood,
-            gold: general.gold
-        };
-
-        unitsList
-            .sort((a, b) => b.qty - a.qty)
-            .forEach((element, index) => {
-                if (element.qty === 0 || element.qty === null || element.qty === '') {
-                    unitsList[index] = element;
-                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
-                    if (document.getElementById(element.unit.id) !== null) {
-                        document.getElementById(element.unit.id).placeholder = unitsList[index].maxQty;
-                        document.getElementById(element.unit.id).max = unitsList[index].maxQty;
-                    }
-                } else {
-                    estResources.food = estResources.food - (element.unit.food * element.qty);
-                    estResources.wood = estResources.wood - (element.unit.wood * element.qty);
-                    estResources.gold = estResources.gold - (element.unit.gold * element.qty);
-                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
-                }
-            });
-    }
-
-    function addUnitToList(unit, qty) {
-        const newUnitQty = {
-            unit: unit,
-            qty: qty,
-            maxQty: qty === null ?
-                calculateMaxRecruitByUnit(unit, {
-                    food: general.food,
-                    wood: general.wood,
-                    gold: general.gold,
-                })
-                : null
-        };
-        const index = unitsList.findIndex((e) => e.unit.id === unit.id);
-        if (index === -1) {
-            unitsList.push(newUnitQty);
-        } else {
-            unitsList[index] = newUnitQty;
+    useEffect(() => {
+        if (general !== null) {
+            loadForm();
         }
-        unitsList.sort((a, b) => b.qty - a.qty);
-        updatePlaceholders();
-    }
+    }, [general]);
 
     function loadForm() {
 
@@ -87,14 +37,62 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
                 setUnitsRenderer(divs);
             }
         )
-
     }
 
-    useEffect(() => {
-        if (general !== null) {
-            loadForm();
+    function calculateMaxRecruitByUnit(unit, resources) {
+        return Math.min(
+            Math.floor(resources.food >= unit.food ? resources.food / unit.food : 0),
+            Math.floor(resources.wood >= unit.wood ? resources.wood / unit.wood : 0),
+            Math.floor(resources.gold >= unit.gold ? resources.gold / unit.gold : 0),
+        );
+    }
+
+    function addUnitToList(unit, qty) {
+        const newUnitQty = {
+            unit: unit,
+            qty: qty,
+            maxQty: qty === null ?
+                calculateMaxRecruitByUnit(unit, {
+                    food: general.food,
+                    wood: general.wood,
+                    gold: general.gold,
+                })
+                : null
+        };
+        const index = unitsList.findIndex((e) => e.unit.id === unit.id);
+        if (index === -1) {
+            unitsList.push(newUnitQty);
+        } else {
+            unitsList[index] = newUnitQty;
         }
-    }, [general]);
+        unitsList.sort((a, b) => b.qty - a.qty);
+        updatePlaceholders();
+    }
+    function updatePlaceholders() {
+        const estResources = {
+            food: general.food,
+            wood: general.wood,
+            gold: general.gold
+        };
+
+        unitsList
+            .sort((a, b) => b.qty - a.qty)
+            .forEach((element, index) => {
+                if (element.qty === 0 || element.qty === null || element.qty === '') {
+                    unitsList[index] = element;
+                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
+                    if (document.getElementById(element.unit.id) !== null) {
+                        document.getElementById(element.unit.id).placeholder = unitsList[index].maxQty;
+                        document.getElementById(element.unit.id).max = unitsList[index].maxQty;
+                    }
+                } else {
+                    estResources.food = estResources.food - (element.unit.food * element.qty);
+                    estResources.wood = estResources.wood - (element.unit.wood * element.qty);
+                    estResources.gold = estResources.gold - (element.unit.gold * element.qty);
+                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
+                }
+            });
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -103,12 +101,11 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
         unitsList.forEach(element => armyUnitsList.push({
             id: {
                 unitId: element.unit.id,
-                armyId: armies[0]
+                armyId: armies[0].id
             },
             qty: element.qty
         }));
-        console.log('unitsList',unitsList);
-        console.log(postArmyUnitsUrl,armyUnitsList);
+
         axios.post(postArmyUnitsUrl, armyUnitsList)
             .then(response => {
                 unitsList.forEach(element => {

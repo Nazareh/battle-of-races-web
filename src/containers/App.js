@@ -32,10 +32,10 @@ function App() {
     };
 
     const login = async (response) => {
-        await setIsAuthenticated(response.authenticated)
-        await setUserEmail(response.email);
-        await updateGeneralByEmail(response.email)
-        await setArmyUnits(null);
+        setIsAuthenticated(response.authenticated)
+        setUserEmail(response.email);
+        updateGeneralByEmail(response.email)
+        setArmyUnits(null);
     };
 
     useEffect(() => {
@@ -44,11 +44,11 @@ function App() {
     async function updateGeneral(generalId) {
         if (generalId !== null) {
             const generalResponse = await axios.get(urls.general + '/' + generalId);
-            await setGeneral(generalResponse.data);
+            setGeneral(generalResponse.data);
 
             const armiesResponse = await axios.get(urls.generalArmies + generalId);
 
-            await setArmies(armiesResponse.data);
+            setArmies(armiesResponse.data);
 
             updateArmyUnits(armiesResponse.data.map(army => army.id));
         }
@@ -57,25 +57,25 @@ function App() {
     async function updateGeneralByEmail(userEmail) {
         if (userEmail !== null) {
             const generalResponse = await axios.get(urls.general + '/email/' + userEmail);
-            await setGeneral(generalResponse.data);
+            setGeneral(generalResponse.data);
 
             const armiesResponse = await axios.get(urls.generalArmies + generalResponse.data.id);
 
-            await setArmies(armiesResponse.data);
+            setArmies(armiesResponse.data);
 
             updateArmyUnits(armiesResponse.data.map(army => army.id));
         }
     }
 
-    function updateArmyUnits(armies) {
-        axios.get(urls.armyUnits + armies[0])
-            .then(response => {
+     function updateArmyUnits(armies) {
+        axios.get(urls.armyUnits +armies[0])
+            .then(async response => {
                 setArmyUnits(response.data);
             });
     }
 
     async function updateArmies(newValue) {
-        await setArmies(newValue);
+        setArmies(newValue);
     }
 
     return (
