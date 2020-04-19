@@ -10,7 +10,7 @@ import './App.css';
 import {useGoogleLogin} from "react-google-login";
 
 function App() {
-    const baseUrl = 'http://192.168.20.97:8080/api/v1/';
+    const baseUrl = 'http://nazareh-d9571034.localhost.run/api/v1/';
     const urls = {
         general: baseUrl + 'generals',
         units: baseUrl + 'units',
