@@ -5,6 +5,7 @@ import RecruitUnits from "../components/RecruitUnits";
 import Resources from "../components/Resources"
 import Dashboard from "../components/Dashboard";
 import Login from "../components/login/Login";
+import MilitaryPoint from "../components/militaryPoint/MilitaryPoint";
 import './App.css';
 import {useGoogleLogin} from "react-google-login";
 
@@ -110,15 +111,14 @@ function App() {
                            armyUnits={armyUnits}
                            unitstUrl={urls.units}
                            general={general}/>
-
-                <RecruitUnits isAuthenticated={isAuthenticated}
+               <RecruitUnits isAuthenticated={isAuthenticated}
                               getRaceUnitsUrl={urls.units}
                               postArmyUnitsUrl={urls.armyUnits}
                               general={general}
                               armies={armies}
                               updateGeneral={updateGeneral}
                               updateArmyUnits={updateArmyUnits}/>
-
+                <MilitaryPoint isAuthenticated={isAuthenticated} />
             </div>
     );
 }

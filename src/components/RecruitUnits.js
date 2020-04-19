@@ -120,6 +120,7 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
     return (
         !!isAuthenticated ?
             <form className='outline flex flex-column' onSubmit={handleSubmit}>
+                <p className="f3"> Recruit units</p>
                 <div className='flex flex-wrap'>
                     {unitsRenderer}
                 </div>

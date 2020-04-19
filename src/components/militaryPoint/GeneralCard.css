@@ -1,0 +1,25 @@
+
+.btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+.btn:active {
+    background: #93d420;
+
+}
+.btn:hover {
+    background-color: "grow";
+}
+
+/*.attack-btn{*/
+/*    background: url('./icon_attack.png') no-repeat;*/
+/*}*/
+
+/*.defend-btn{*/
+/*    background: url('./icon_defend.png') 5px no-repeat center;*/
+
+/*}*/

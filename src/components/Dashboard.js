@@ -33,7 +33,8 @@ const Dashboard = ({isAuthenticated, armyUnits, unitstUrl, general}) => {
 
     return (
         !!isAuthenticated ?
-            <div className="pa4 outline ">
+            <div className="pa3 outline ">
+                <p className="f3">Dashboard</p>
                 <div className="overflow-auto">
                     <table className="f6 w20 mw8 left" cellSpacing="0">
                         <thead>
