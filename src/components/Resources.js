@@ -2,9 +2,9 @@ import React from "react";
 
 const Resources = ({general}) => {
 
-    if (general !== null) {
+    if (!!general) {
         return (
-            <div className='flex justify-center outline'>
+            <div className='flex justify-center'>
                 <div className='ph3'>
                     <p> {general.name} </p>
                 </div>
@@ -15,9 +15,8 @@ const Resources = ({general}) => {
                 </div>
             </div>
         )
-    } else {
-        return <div></div>
-    }
+    }else
+    return (<div></div>)
 };
 
 export default Resources;

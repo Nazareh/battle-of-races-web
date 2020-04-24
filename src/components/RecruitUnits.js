@@ -1,33 +1,36 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {urls} from '../components/urls';
+import {navigate} from 'hookrouter';
 
-const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, general, updateGeneral, armies, updateArmyUnits}) => {
+const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits}) => {
     const [unitsRenderer, setUnitsRenderer] = useState(null);
     const [unitsList, setUnitsList] = useState([]);
+    const [rerender, setrerender] = useState(false);
     const divs = [];
 
     useEffect(() => {
         if (general !== null) {
             loadForm();
         }
-    }, [general]);
+    }, [unitsList]);
 
     function loadForm() {
 
-        axios.get(getRaceUnitsUrl + "/race/" + general.race).then(response => {
+        axios.get(urls.getUnitsByRace + general.race).then(response => {
 
                 for (const [index, unit] of response.data.entries()) {
                     addUnitToList(unit, null);
                     divs.push(
                         <div className='pa3 w20 justify-between' key={index}>
                             <div><label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label></div>
-                            <div><input className='w4 center ph2' type='number'
+                            <div><input className='w4 bg-black-80 white center ph2' type='number'
                                         id={unit.id}
                                         name={unit.name}
                                         min={'0'}
-                                value={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].qty}
-                                placeholder={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].maxQty}
-                                onChange={event => addUnitToList(unit, event.target.value)}
+                                        value={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].qty}
+                                        placeholder={unitsList[unitsList.findIndex((e) => e.unit.id === unit.id)].maxQty}
+                                        onChange={e => addUnitToList(unit, e.target.value)}
                                         size={2}
                             />
                             </div>
@@ -68,6 +71,7 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
         unitsList.sort((a, b) => b.qty - a.qty);
         updatePlaceholders();
     }
+
     function updatePlaceholders() {
         const estResources = {
             food: general.food,
@@ -94,8 +98,7 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
             });
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = () => {
         const armyUnitsList = [];
 
         unitsList.forEach(element => armyUnitsList.push({
@@ -106,30 +109,31 @@ const RecruitUnits = ({isAuthenticated, getRaceUnitsUrl, postArmyUnitsUrl, gener
             qty: element.qty
         }));
 
-        axios.post(postArmyUnitsUrl, armyUnitsList)
+        axios.post(urls.postArmyUnits, armyUnitsList)
             .then(response => {
                 unitsList.forEach(element => {
                     element.qty = null;
                     document.getElementById(element.unit.id).value = null
                 });
                 updateGeneral(general.id);
-                updateArmyUnits(armies)
+                updateArmyUnits(armies);
             });
     };
 
     return (
-        !!isAuthenticated ?
-            <form className='outline flex flex-column' onSubmit={handleSubmit}>
-                <p className="f3"> Recruit units</p>
-                <div className='flex flex-wrap'>
-                    {unitsRenderer}
-                </div>
-                <div className='pa3'>
-                    <input className='w-25 center' type='submit' value="Train"/>
-                </div>
-            </form>
-            :
-            <div></div>
+        <div className='white flex flex-column'>
+            <p className="f3">Recruit units</p>
+            <div className='flex flex-wrap'>
+                {unitsRenderer}
+            </div>
+            <div className='pa3'>
+                <input
+                    className="f6 dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
+                    type='submit' value="Train"
+                    onClick={e => handleSubmit()}
+                />
+            </div>
+        </div>
     );
 };
 

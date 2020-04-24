@@ -5,7 +5,8 @@ const CardList = ({list}) => {
     return (
         <div>
             {list.map(e => <GeneralCard id={e.id}
-                                                name={e.name}
+                                        name={e.name}
+                                        action={"Attack"}
             />)
             }
         </div>
