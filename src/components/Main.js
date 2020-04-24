@@ -14,7 +14,9 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                                                       general={general}/>);
 
     useEffect(() => {
+
         if (!!general) {
+            updateGeneral(general);
             updateArmies(general.id);
         }
     }, []);
@@ -47,9 +49,12 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                         <div className="pa3 pa5-ns">
                             <ul className="list pl0 measure center">
                                 <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
-                                    onClick={() => setContent(<Dashboard armyUnits={armyUnits}
-                                                                         general={general}
-                                    />)}
+                                    onClick={() => {
+                                        setContent(<Dashboard armyUnits={armyUnits}
+                                                              general={general}
+                                        />);
+                                        updateArmyUnits(armies);
+                                    }}
                                 >Dashboard
 
                                 </li>
@@ -57,11 +62,14 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                                     onClick={() => setContent(<MilitaryPoint general={general} />)}>Military Point
                                 </li>
                                 <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
-                                    onClick={() => setContent(<RecruitUnits general={general}
-                                                                            updateGeneral={updateGeneral}
-                                                                            armies={armies}
-                                                                            updateArmyUnits={updateArmyUnits}
-                                    />)}
+                                    onClick={() => {
+                                        setContent(<RecruitUnits general={general}
+                                                                 updateGeneral={updateGeneral}
+                                                                 armies={armies}
+                                                                 updateArmyUnits={updateArmyUnits}
+                                        />);
+                                        updateArmyUnits(armies);
+                                    }}
                                 > Recruit Units
                                 </li>
                             </ul>
