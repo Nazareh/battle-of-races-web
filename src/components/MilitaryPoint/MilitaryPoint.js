@@ -17,9 +17,6 @@ const MilitaryPoint = ({general}) => {
     }
     useEffect(() => {
         if (!searchField) {
-            console.log('generalId',general.id);
-            console.log('getOpponentes',urls.getOpponentes + general.id);
-
             axios.get(urls.getOpponentes + general.id)
                 .then(res => {
                         setSearchList(res.data)
@@ -29,17 +26,12 @@ const MilitaryPoint = ({general}) => {
         };
     }, [searchField]);
 
-
     return (
             <fragment>
                 <p className="f3 white">Military Point</p>
                 <div className='flex flex-wrap justify-start pa3'>
 
                     <label className="db white fw6 lh-copy f6" htmlFor="searchBox"> Search by name</label>
-                    {/*<select className="tc" onchange={updateList}>*/}
-                    {/*    <option selected value="name">Name</option>*/}
-                    {/*    <option value="id">id</option>*/}
-                    {/*</select>*/}
                     <input className="pa2 input-reset ba bg-black-80 white w-100"
                            type="text"
                            name="searchBox"
@@ -47,7 +39,8 @@ const MilitaryPoint = ({general}) => {
                            onChange={updateList}
                            />
                 </div>
-                <CardList list={searchList}/>
+                <CardList generalId={general.id}
+                          list={searchList}/>
             </fragment>
     )
 
