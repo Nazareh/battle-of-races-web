@@ -24,7 +24,7 @@ const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits}) => {
                     addUnitToList(unit, null);
                     divs.push(
                         <div className='pa3 w20 justify-between' key={index}>
-                            <div><label className='w3 ph3 underline' htmlFor={unit.name}>{unit.name}</label></div>
+                            <div><label className='w3 ph3' htmlFor={unit.name}>{unit.name}</label></div>
                             <div><input className='w4 bg-black-80 white center ph2' type='number'
                                         id={unit.id}
                                         name={unit.name}

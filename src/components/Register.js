@@ -55,21 +55,25 @@ const Register = ({registerNewUser, existingUser}) => {
                     </div>
                 </fieldset>
 
-                <div className="pa2 bg-black-80 flex flex-row justify-around w-auto">
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 ">
-                        <input type="radio" name="race" value="HUMAN" onChange={e => onRaceChange(e.currentTarget.value)}/>Human
+                <div className="pa2 bg-black-80 flex flex-wrap">
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race" value="HUMAN" onChange={e => onRaceChange(e.currentTarget.value)}/> Human
                     </label>
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 ">
-                        <input type="radio" name="race" value="DWARF" onChange={e => onRaceChange(e.currentTarget.value)}/>Dwarf
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race" value="ELF" onChange={e => onRaceChange(e.currentTarget.value)}/> Elf
                     </label>
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 ">
-                        <input type="radio" name="race" value="NORFS" onChange={e => onRaceChange(e.currentTarget.value)}/>Norf
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race"
+                               value="URGROSH" onChange={e => onRaceChange(e.currentTarget.value)}/> Urgrosh
                     </label>
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 ">
-                        <input type="radio" name="race" value="FELIX" onChange={e => onRaceChange(e.currentTarget.value)}/>Felix
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race" disabled={true} value="DWARF" onChange={e => onRaceChange(e.currentTarget.value)}/> Dwarf
                     </label>
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 ">
-                        <input type="radio" name="race" value="ORCS" onChange={e => onRaceChange(e.currentTarget.value)}/>Orc
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race" disabled={true} value="NORFS" onChange={e => onRaceChange(e.currentTarget.value)}/> Norff
+                    </label>
+                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                        <input type="radio" name="race"disabled={true} value="FELIX" onChange={e => onRaceChange(e.currentTarget.value)}/> Felix
                     </label>
                 </div>
                 <div>
