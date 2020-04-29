@@ -12,7 +12,7 @@ const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits}) => {
     useEffect(() => {
         if (general !== null) {
             loadForm();
-            updateGeneral(general);
+            updateGeneral(general.id);
         }
     }, [unitsList]);
 

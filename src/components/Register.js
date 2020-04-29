@@ -7,6 +7,7 @@ const Register = ({registerNewUser, existingUser}) => {
         name: null,
         email: null,
         password: null,
+        resources_id: null,
         race: null
     };
     const onUsernameChange = (value) => {
@@ -67,7 +68,7 @@ const Register = ({registerNewUser, existingUser}) => {
                                value="URGROSH" onChange={e => onRaceChange(e.currentTarget.value)}/> Urgrosh
                     </label>
                     <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
-                        <input type="radio" name="race" disabled={true} value="DWARF" onChange={e => onRaceChange(e.currentTarget.value)}/> Dwarf
+                        <input type="radio" name="race" value="DWARF" onChange={e => onRaceChange(e.currentTarget.value)}/> Dwarf
                     </label>
                     <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
                         <input type="radio" name="race" disabled={true} value="NORFS" onChange={e => onRaceChange(e.currentTarget.value)}/> Norff

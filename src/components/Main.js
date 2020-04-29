@@ -14,9 +14,8 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                                                       general={general}/>);
 
     useEffect(() => {
-
         if (!!general) {
-            updateGeneral(general);
+            updateGeneral(general.id);
             updateArmies(general.id);
         }
     }, []);
@@ -59,7 +58,12 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
 
                                 </li>
                                 <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
-                                    onClick={() => setContent(<MilitaryPoint general={general} />)}>Military Point
+                                    onClick={() => {
+                                        setContent(<MilitaryPoint general={general}
+                                                                  armies={armies}
+                                        />);
+                                        updateArmies(general.id);
+                                    }}>Military Point
                                 </li>
                                 <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
                                     onClick={() => {

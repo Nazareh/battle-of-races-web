@@ -3,7 +3,7 @@ import CardList from "./CardList";
 import {urls} from "../urls";
 import axios from "axios";
 
-const MilitaryPoint = ({general}) => {
+const MilitaryPoint = ({general,armies}) => {
     const [searchField, setSearchField] = useState('');
     const [searchList, setSearchList] = useState([]);
     let baseList = [];
@@ -27,7 +27,7 @@ const MilitaryPoint = ({general}) => {
     }, [searchField]);
 
     return (
-            <fragment>
+            <div>
                 <p className="f3 white">Military Point</p>
                 <div className='flex flex-wrap justify-start pa3'>
 
@@ -40,8 +40,9 @@ const MilitaryPoint = ({general}) => {
                            />
                 </div>
                 <CardList generalId={general.id}
+                          armyId={armies[0].id}
                           list={searchList}/>
-            </fragment>
+            </div>
     )
 
 }
