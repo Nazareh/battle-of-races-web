@@ -10,16 +10,25 @@ import {urls} from "./urls";
 const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
     const [armies, setArmies] = useState({});
     const [armyUnits, setArmyUnits] = useState(null);
+    const [war, setWar] = useState({});
     const [content, setContent] = useState(<Dashboard armyUnits={armyUnits}
                                                       general={general}/>);
 
     useEffect(() => {
         if (!!general) {
+            updateWar();
             updateGeneral(general.id);
             updateArmies(general.id);
         }
     }, []);
 
+    const updateWar = () => {
+        axios.get(urls.getWar)
+            .then(res => {
+                    setWar(res.data);
+                }
+            );
+    }
      const updateArmies = (generalId) => {
         axios.get(urls.getArmiesByGeneral + generalId)
             .then(res => {
@@ -42,7 +51,9 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
             <div>
                 <Navigation isAuthenticated={isAuthenticated}
                             logout={logout}/>
-                <Resources general={general}/>
+                <Resources general={general}
+                           war={war}
+                />
                 <div className="dt dt--fixed">
                     <div className="dtc-ns tc w-20 pv4 bg-black-10">
                         <div className="pa3 pa5-ns">
@@ -51,7 +62,9 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                                     onClick={() => {
                                         setContent(<Dashboard armyUnits={armyUnits}
                                                               general={general}
+                                                              armies={armies}
                                         />);
+
                                         updateArmyUnits(armies);
                                     }}
                                 >Dashboard

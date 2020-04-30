@@ -1,6 +1,6 @@
 import React from "react";
 
-const Resources = ({general}) => {
+const Resources = ({general,war}) => {
     if (!!general) {
         return (
             <div className='flex justify-center'>
@@ -14,6 +14,9 @@ const Resources = ({general}) => {
                 </div>
                 <div className='ph3 white'>
                     <p> XP: {general.xp} </p>
+                </div>
+                <div className='ph3 white'>
+                    <p> Turn {war.currentTurn} of {war.endTurn} </p>
                 </div>
             </div>
         )

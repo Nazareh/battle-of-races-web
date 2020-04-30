@@ -11,5 +11,7 @@ export const urls = {
     postArmyUnits: baseUrl + 'armyunits',
     getArmyUnitsbArmy: baseUrl + 'armyunits/',
     getOpponentes: baseUrl + 'generals/opponents/',
-    postCombat: baseUrl +  'combats'
+    postCombat: baseUrl +  'combats',
+    getWar: baseUrl + 'wars/1'
+
 };
