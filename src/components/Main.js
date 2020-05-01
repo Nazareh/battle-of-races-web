@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import MilitaryPoint from "./MilitaryPoint/MilitaryPoint";
 import RecruitUnits from "./RecruitUnits";
 import Resources from "./Resources";
+import Workers from "./Workers";
 import {urls} from "./urls";
 
 const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
@@ -69,6 +70,15 @@ const Main = ({isAuthenticated, logout, general, updateGeneral}) => {
                                     }}
                                 >Dashboard
 
+                                </li>
+                                <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
+                                    onClick={() => {
+                                        updateGeneral(general);
+                                        setContent(<Workers general={general}
+                                                            updateGeneral={updateGeneral}
+                                        />);
+                                    }}
+                                > Workers
                                 </li>
                                 <li className="lh-copy pointer white grow pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
                                     onClick={() => {

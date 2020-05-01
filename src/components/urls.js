@@ -12,6 +12,8 @@ export const urls = {
     getArmyUnitsbArmy: baseUrl + 'armyunits/',
     getOpponentes: baseUrl + 'generals/opponents/',
     postCombat: baseUrl +  'combats',
-    getWar: baseUrl + 'wars/1'
+    getWar: baseUrl + 'wars/1',
+    putWorkerIntoResource: baseUrl + 'resources/',
+    putBuyWorker:  baseUrl + 'resources/idle/'
 
 };
