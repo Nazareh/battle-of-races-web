@@ -23,13 +23,20 @@ const Workers = ({general, updateGeneral}) => {
     return (
         <div className="white flex flex-column">
             <p className="f3"> Workers</p>
-            <div className="outline pa4 flex flex-column justify-start">
+            <div className="outline pa2 flex flex-column justify-start">
                 <div className="flex flex-row" >
-                    <p >Idle:</p>
-                    <p className="pl2">{general.resources.idleWorkers}</p>
+                    <p className="mv3 dib">Idle:</p>
+                    <p className="mv3 dib">{general.resources.idleWorkers}</p>
                 </div>
-                <div className="justify-start">
-                    <label className="pa4 mv1" htmlFor="currency">Buy using:</label>
+                <div className="flex flex-wrap">
+                    <label className="mv3 dib" htmlFor="currency">Buy using:</label>
+                    <p className="mv3 dib ">
+                        {Math.pow(general.resources.workersOnFood +
+                        general.resources.idleWorkers +
+                        general.resources.workersOnGold +
+                        general.resources.workersOnWood
+                        ,2 )  }
+                    </p>
                     <select
                         className="mv1 dib bg-black-80 white bg-animate no-underline pv1 ph1 ba b--white-20"
                         id="currency"
@@ -42,47 +49,42 @@ const Workers = ({general, updateGeneral}) => {
                         className="mv1 justify-center dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv1 ph1 br-pill ba b--white-20"
                         onClick={() => addBuyWorker()}>+
                     </button>
-                    <p>{Math.pow(general.resources.workersOnFood +
-                        general.resources.idleWorkers +
-                        general.resources.workersOnGold +
-                        general.resources.workersOnWood
-                    ,2 )  }
-                    </p>
+
                 </div>
             </div>
-            <div className="outline pa3 flex flex-row">
+            <div className="outline pa2 flex flex-row">
                 <button
                     className="mv1 justify-center dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv1 ph1 br-pill ba b--white-20"
                     onClick={() => addWorkerToResource('FOOD')}>
                     +
                 </button>
-                <p className="pa3">On Food</p>
-                <p className="pa3">{general.resources.workersOnFood}</p>
-                <p className="pa3">Current Production</p>
-                <p className="pa3">{general.resources.foodProduction}</p>
+                <p className="pa1">On Food</p>
+                <p className="pa1">{general.resources.workersOnFood}</p>
+                <p className="pa1">Current Production</p>
+                <p className="pa1">{general.resources.foodProduction}</p>
             </div>
-            <div className="outline pa3 flex flex-row">
+            <div className="outline pa2 flex flex-row">
                 <button
                     className="mv1 justify-center dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv1 ph1 br-pill ba b--white-20"
                     onClick={() => addWorkerToResource('WOOD')}>
                     +
                 </button>
-                <p className="pa3">On Wood</p>
-                <p className="pa3">{general.resources.workersOnWood}</p>
-                <p className="pa3">Current Production</p>
-                <p className="pa3">{general.resources.woodProduction}</p>
+                <p className="pa1">On Wood</p>
+                <p className="pa1">{general.resources.workersOnWood}</p>
+                <p className="pa1">Current Production</p>
+                <p className="pa1">{general.resources.woodProduction}</p>
 
             </div>
-            <div className="outline pa3 flex flex-row">
+            <div className="outline pa1 flex flex-row">
                 <button
                     className="mv1 justify-center dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv1 ph1 br-pill ba b--white-20"
                     onClick={() => addWorkerToResource('GOLD')}>
                     +
                 </button>
-                <p className="pa3">On Gold</p>
-                <p className="pa3">{general.resources.workersOnGold}</p>
-                <p className="pa3">Current Production</p>
-                <p className="pa3">{general.resources.goldProduction}</p>
+                <p className="pa1">On Gold</p>
+                <p className="pa1">{general.resources.workersOnGold}</p>
+                <p className="pa1">Current Production</p>
+                <p className="pa1">{general.resources.goldProduction}</p>
             </div>
         </div>
     );
