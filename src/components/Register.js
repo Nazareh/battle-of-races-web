@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "./Navigation";
 import Banner from "./Banner";
 
 const Register = ({registerNewUser, existingUser}) => {
@@ -28,7 +27,6 @@ const Register = ({registerNewUser, existingUser}) => {
 
     return (
         <main className="black-80">
-            <Navigation/>
             {!!existingUser ? <Banner text={'Username or email already in use. Please choose another!'}
                                       alertType={'ERROR'}
             /> : <div></div>}

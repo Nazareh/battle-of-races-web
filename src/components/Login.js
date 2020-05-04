@@ -1,5 +1,4 @@
 import React from "react";
-import {navigate} from 'hookrouter';
 
 const Login = ({login}) => {
     let username = null;
@@ -13,7 +12,7 @@ const Login = ({login}) => {
     }
     return (
         <main className="black-80">
-            <div className="measure center white pa3 shadow-5">
+            <div className="measure center white pa3 mv5 shadow-5">
                 <fieldset id="login" className="ba b--transparent ph0 mh0">
                     <legend className="f2 fw6 ph0 mh0">Login</legend>
                     <div className="mt3">
