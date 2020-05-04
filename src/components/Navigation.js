@@ -22,7 +22,6 @@ export default function Navigation({isAuthenticated, logout}) {
 
         if (!isAuthenticated) {
             navBar = loggedOutNavBarItems;
-            console.log("usereffect",isAuthenticated,navBar,loggedOutNavBarItems)
 
         } else {
             navBar = loggedInNavBarItems;
