@@ -9,7 +9,7 @@ export const urls = {
     getUnitsByRace: baseUrl + 'units/race/',
     getArmiesByGeneral: baseUrl + 'armies/generals/',
     postArmyUnits: baseUrl + 'armyunits',
-    getArmyUnitsbArmy: baseUrl + 'armyunits/',
+    getArmyUnitsByArmy: baseUrl + 'armyunits/',
     getOpponentes: baseUrl + 'generals/opponents/',
     postCombat: baseUrl +  'combats',
     getWar: baseUrl + 'wars/1',

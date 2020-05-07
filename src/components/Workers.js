@@ -29,8 +29,8 @@ const Workers = ({general, updateGeneral, logout}) => {
         )
     }
     return (
-        <div className="white measure flex flex-column pa4">
-            <p className="f3"> Workers</p>
+        <div className="white measure center flex flex-column pa4">
+            <p className="f3 tc"> Workers</p>
             <div className="outline pa1 flex flex-column justify-start">
                 <div className="flex ma3 flex-row">
                     <p className="dib ma1">Idle:</p>

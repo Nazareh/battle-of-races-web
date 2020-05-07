@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {useRoutes, navigate} from 'hookrouter';
+import {navigate, useRoutes} from 'hookrouter';
 import axios from "axios";
 import Register from "../components/Register";
 import Main from "../components/Main";
@@ -9,8 +9,8 @@ import Particles from "react-particles-js";
 import Navigation from "../components/Navigation";
 import Login from "../components/Login";
 import Resources from "../components/Resources";
-import Dashboard from "../components/Dashboard";
 import Workers from "../components/Workers";
+import RecruitUnits from "../components/RecruitUnits";
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,26 +27,29 @@ export default function App() {
 
     const logout = () => {
         setIsAuthenticated(false);
+        setWar(null);
         setGeneral(null);
         setExistingUser(false);
+        setArmies(null);
+        setArmyUnits(null);
+        setLoading(false);
+
         navigate("/");
     }
 
-    const particlesOptions =
-        {
-            particles: {
-                number: {
-                    value: 80,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
+    const particlesOptions = {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
                 }
             }
         }
+    }
 
-
-    const login =  (username) => {
+    const login = (username) => {
         axios.get(urls.getGeneralByName + username.username)
             .then(res => {
                     if (!!res.data) {
@@ -54,12 +57,12 @@ export default function App() {
                         setLoading(true);
                         updateGeneral(res.data.id);
                         updateWar();
+                        updateArmies(res.data.id);
 
                         navigate("/main")
                     } else {
                         alert('Username does not exist');
                     }
-                    ;
                 }
             )
     }
@@ -77,17 +80,23 @@ export default function App() {
     }
 
     const updateGeneral = async (generalId) => {
-        await axios.get(urls.getGeneralById + generalId )
-                .then(res => setGeneral(res.data));
+        await axios.get(urls.getGeneralById + generalId)
+            .then(res => setGeneral(res.data));
     };
 
     const updateWar = async () => {
-        await  axios.get(urls.getWar)
+        await axios.get(urls.getWar)
             .then(res => setWar(res.data));
     };
-    const updateArmies = () => {
-        axios.get(urls.getWar)
-            .then(res => setWar(res.data));
+
+    const updateArmies = (generalId) => {
+        axios.get(urls.getArmiesByGeneral + generalId)
+            .then(res => setArmies(res.data));
+    }
+
+    const updateArmyUnits = (armies) => {
+        axios.get(urls.getArmyUnitsByArmy + armies[0].id)
+            .then(res => setArmyUnits(res.data));
     };
 
     const Routes = {
@@ -101,7 +110,6 @@ export default function App() {
             <div>
                 <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
                 <Resources general={general} war={war}/>
-                {/*<Particles className="particles" params={particlesOptions}/>*/}
                 <Main general={general}
                       war={war}
                       logout={logout}/>
@@ -117,15 +125,23 @@ export default function App() {
             <div>
                 <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
                 <Resources general={general} war={war}/>
-                {/*<Particles className="particles" params={particlesOptions}/>*/}
                 <Workers general={general}
                          updateGeneral={updateGeneral}
                          logout={logout}
                 />
+            </div>,
+        "/recruitunits": () =>
+            <div>
+                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
+                <Resources general={general} war={war}/>
+                <RecruitUnits general={general}
+                              updateGeneral={updateGeneral}
+                              armies={armies}
+                              updateArmyUnits={updateArmyUnits}
+                              logout={logout}
+                />
             </div>
     };
 
-    const routeResult = useRoutes(Routes)
-
-    return routeResult;
+    return useRoutes(Routes);
 }

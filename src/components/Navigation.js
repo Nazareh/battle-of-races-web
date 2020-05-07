@@ -14,7 +14,7 @@ export default function Navigation({isAuthenticated, logout}) {
     const loggedInNavBarItems = [
         {title: "Dashboard", location: "/", action: doNothing},
         {title: "Workers", location: "/workers", action: doNothing},
-        {title: "Recruit Units", location: "/", action: doNothing},
+        {title: "Recruit Units", location: "/recruitunits", action: doNothing},
         {title: "Military Point", location: "/", action: doNothing},
         {title: "Logout", location: "/", action: logout}
     ]
@@ -32,7 +32,6 @@ export default function Navigation({isAuthenticated, logout}) {
             renderedBar.push(
                 <div className="flex-grow pa3 flex flex-column items-center">
                     <a onClick={() => {
-                        console.log(value.location)
                         navigate(value.location);
                         value.action();
                     }}
