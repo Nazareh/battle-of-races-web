@@ -15,7 +15,7 @@ export default function Navigation({isAuthenticated, logout}) {
         {title: "Dashboard", location: "/", action: doNothing},
         {title: "Workers", location: "/workers", action: doNothing},
         {title: "Recruit Units", location: "/recruitunits", action: doNothing},
-        {title: "Military Point", location: "/", action: doNothing},
+        {title: "Military Point", location: "/militarypoint", action: doNothing},
         {title: "Logout", location: "/", action: logout}
     ]
     let navBar =[];

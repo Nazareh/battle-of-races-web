@@ -1,7 +1,7 @@
 import React from "react";
 
 const Resources = ({general,war}) => {
-    if (!!general) {
+    if (!!general && !!war) {
         return (
             <div className='flex justify-center'>
                 <div className='ph3 white'>

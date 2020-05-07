@@ -11,6 +11,7 @@ import Login from "../components/Login";
 import Resources from "../components/Resources";
 import Workers from "../components/Workers";
 import RecruitUnits from "../components/RecruitUnits";
+import MilitaryPoint from "../components/MilitaryPoint/MilitaryPoint";
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,6 +20,7 @@ export default function App() {
     const [armies, setArmies] = useState({});
     const [armyUnits, setArmyUnits] = useState(null);
     const [war, setWar] = useState({});
+    const [opponents,setOpponents] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -32,6 +34,7 @@ export default function App() {
         setExistingUser(false);
         setArmies(null);
         setArmyUnits(null);
+        setOpponents(null);
         setLoading(false);
 
         navigate("/");
@@ -58,6 +61,7 @@ export default function App() {
                         updateGeneral(res.data.id);
                         updateWar();
                         updateArmies(res.data.id);
+                        updateOpponents(res.data.id);
 
                         navigate("/main")
                     } else {
@@ -97,6 +101,11 @@ export default function App() {
     const updateArmyUnits = (armies) => {
         axios.get(urls.getArmyUnitsByArmy + armies[0].id)
             .then(res => setArmyUnits(res.data));
+    };
+
+    const updateOpponents = (generalId) => {
+        axios.get(urls.getOpponentes + generalId)
+            .then(res => setOpponents(res.data));
     };
 
     const Routes = {
@@ -140,7 +149,18 @@ export default function App() {
                               updateArmyUnits={updateArmyUnits}
                               logout={logout}
                 />
+            </div>,
+        "/militarypoint": () =>
+            <div>
+                <Navigation isAuthenticated={isAuthenticated} logout={logout} />
+                <Resources general={general} war={war}/>
+                <MilitaryPoint general={general}
+                               armies={armies}
+                               logout={logout}
+                               opponents={opponents}
+                />
             </div>
+
     };
 
     return useRoutes(Routes);
