@@ -3,7 +3,7 @@ import './GeneralCard.css';
 import axios from "axios";
 import {urls} from "../urls";
 
-const GeneralCard = ({opponentId,name,action,armyId}) => {
+const GeneralCard = ({opponentId, name, action, armyId}) => {
 
     const executeAction = (e) => {
         const combatRequest = {
@@ -15,8 +15,16 @@ const GeneralCard = ({opponentId,name,action,armyId}) => {
             },
             turnsDuration: 1
         }
-        axios.post(urls.postCombat,combatRequest)
-            .then(alert('Army sent'));
+        axios.post(urls.postCombat, combatRequest)
+            .then(response => {
+                if (response.status === 200) {
+                    alert('Army has been sent')
+                }
+            })
+            .catch(error => {
+                alert(error.response.data.message);
+            })
+        ;
     }
 
     return (
