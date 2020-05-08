@@ -1,10 +1,33 @@
 import React, {useState, useEffect} from "react";
 import {navigate} from 'hookrouter';
 
-export default function Navigation({isAuthenticated, logout}) {
+export default function Navigation({isAuthenticated, logout,general,updateWar,updateGeneral,
+                                       updateArmies,updateIncomingArmies,updateOpponents}) {
     const doNothing = () => {
 
     }
+
+    const refreshCommonData = () => {
+        if (!!general){
+            updateWar();
+            updateGeneral(general.id);
+            updateArmies(general.id);
+        }
+    }
+    const refreshDashboard = () => {
+        if (!!general){
+            refreshCommonData();
+            updateIncomingArmies(general.id);
+        }
+    }
+
+    const refreshOpponents = () => {
+        if (!!general){
+            refreshCommonData();
+            updateOpponents(general.id);
+        }
+    }
+
     const loggedOutNavBarItems = [
         {title: "Home", location: "/", action: doNothing},
         {title: "Register", location: "/register", action: doNothing}
@@ -12,10 +35,10 @@ export default function Navigation({isAuthenticated, logout}) {
     ]
 
     const loggedInNavBarItems = [
-        {title: "Dashboard", location: "/main", action: doNothing},
-        {title: "Workers", location: "/workers", action: doNothing},
-        {title: "Recruit Units", location: "/recruitunits", action: doNothing},
-        {title: "Military Point", location: "/militarypoint", action: doNothing},
+        {title: "Dashboard", location: "/main", action: refreshDashboard},
+        {title: "Workers", location: "/workers", action: refreshCommonData},
+        {title: "Recruit Units", location: "/recruitunits", action: refreshCommonData},
+        {title: "Military Point", location: "/militarypoint", action: refreshOpponents},
         {title: "Logout", location: "/", action: logout}
     ]
     let navBar =[];

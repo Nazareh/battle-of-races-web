@@ -51,7 +51,7 @@ const Workers = ({general, updateGeneral, logout}) => {
                         className="bg-black-80 white bg-animate no-underline ph1 ma1 ba h2 b--white-20"
                         id="currency"
                         onClick={event => setCurrencyToUse(event)}>
-                        <option selected="true" value="FOOD">Food</option>
+                        <option defaultValue="FOOD">Food</option>
                         <option value="WOOD">Wood</option>
                         <option value="GOLD">Gold</option>
                     </select>

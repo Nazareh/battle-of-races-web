@@ -125,17 +125,29 @@ export default function App() {
             .then(res => setIncomingArmies(res.data));
     };
 
+    const navBar =  <Navigation isAuthenticated={isAuthenticated}
+                                logout={logout}
+                                general={general}
+                                updateWar={updateWar}
+                                updateGeneral={updateGeneral}
+                                updateArmies={updateArmies}
+                                updateIncomingArmies={updateIncomingArmies}
+                                updateOpponents={updateOpponents}
+    />;
+    const particles = <Particles className="particles" params={particlesOptions}/>;
+    const resources = <Resources general={general} war={war}/>;
+
     const Routes = {
         "/": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-                <Particles className="particles" params={particlesOptions}/>
+                {navBar}
+                {particles}
                 <Login login={login}/>
             </div>,
         "/main": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-                <Resources general={general} war={war}/>
+                {navBar}
+                {resources}
                 <div className="flex flex-wrap">
                     <ArmyStatus armies={armies}
                                 incomingArmies={incomingArmies}
@@ -148,15 +160,15 @@ export default function App() {
             </div>,
         "/register": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-                <Particles className="particles" params={particlesOptions}/>
+                {navBar}
+                {particles}
                 <Register registerNewUser={registerNewUser}
                           existingUser={existingUser}/>
             </div>,
         "/workers": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-                <Resources general={general} war={war}/>
+                {navBar}
+                {resources}
                 <Workers general={general}
                          updateGeneral={updateGeneral}
                          logout={logout}
@@ -164,8 +176,8 @@ export default function App() {
             </div>,
         "/recruitunits": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-                <Resources general={general} war={war}/>
+                {navBar}
+                {resources}
                 <RecruitUnits general={general}
                               updateGeneral={updateGeneral}
                               armies={armies}
@@ -175,8 +187,8 @@ export default function App() {
             </div>,
         "/militarypoint": () =>
             <div>
-                <Navigation isAuthenticated={isAuthenticated} logout={logout} />
-                <Resources general={general} war={war}/>
+                {navBar}
+                {resources}
                 <MilitaryPoint general={general}
                                armies={armies}
                                logout={logout}
