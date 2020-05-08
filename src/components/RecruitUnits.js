@@ -7,8 +7,6 @@ const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits,logout}) 
     const [unitsList, setUnitsList] = useState([]);
     const divs = [];
 
-
-
     useEffect(() => {
         if (general !== null) {
             loadForm();

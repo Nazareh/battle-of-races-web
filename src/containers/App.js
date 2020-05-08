@@ -12,33 +12,25 @@ import Resources from "../components/Resources";
 import Workers from "../components/Workers";
 import RecruitUnits from "../components/RecruitUnits";
 import MilitaryPoint from "../components/MilitaryPoint/MilitaryPoint";
+import MyUnits from "../components/MyUnits";
+import ArmyStatus from "../components/ArmyStatus";
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [existingUser, setExistingUser] = useState(false);
     const [general, setGeneral] = useState(null);
-    const [armies, setArmies] = useState({});
+    const [armies, setArmies] = useState([]);
     const [armyUnits, setArmyUnits] = useState(null);
     const [war, setWar] = useState({});
     const [opponents,setOpponents] = useState([]);
+    const [incomingArmies,setIncomingArmies]= useState([]);
+
+
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-
-    }, []);
-
-    const logout = () => {
-        setIsAuthenticated(false);
-        setWar(null);
-        setGeneral(null);
-        setExistingUser(false);
-        setArmies(null);
-        setArmyUnits(null);
-        setOpponents(null);
-        setLoading(false);
-
-        navigate("/");
-    }
+    // useEffect(() => {
+    //
+    // }, []);
 
     const particlesOptions = {
         particles: {
@@ -51,6 +43,20 @@ export default function App() {
             }
         }
     }
+    const logout = () => {
+        setIsAuthenticated(false);
+        setWar(null);
+        setGeneral(null);
+        setExistingUser(false);
+        setArmies([]);
+        setArmyUnits(null);
+        setOpponents([]);
+        setIncomingArmies([]);
+        setLoading(false);
+
+        navigate("/");
+    }
+
 
     const login = (username) => {
         axios.get(urls.getGeneralByName + username.username)
@@ -62,6 +68,7 @@ export default function App() {
                         updateWar();
                         updateArmies(res.data.id);
                         updateOpponents(res.data.id);
+                        updateIncomingArmies(res.data.id);
 
                         navigate("/main")
                     } else {
@@ -95,17 +102,27 @@ export default function App() {
 
     const updateArmies = (generalId) => {
         axios.get(urls.getArmiesByGeneral + generalId)
-            .then(res => setArmies(res.data));
+            .then(res => {
+                setArmies(res.data);
+                updateArmyUnits(res.data);
+            });
     }
 
     const updateArmyUnits = (armies) => {
         axios.get(urls.getArmyUnitsByArmy + armies[0].id)
-            .then(res => setArmyUnits(res.data));
+            .then(res => {
+                setArmyUnits(res.data);
+            });
     };
 
     const updateOpponents = (generalId) => {
         axios.get(urls.getOpponentes + generalId)
             .then(res => setOpponents(res.data));
+    };
+
+    const updateIncomingArmies = (generalId) => {
+        axios.get(urls.getIncomingArmies + generalId)
+            .then(res => setIncomingArmies(res.data));
     };
 
     const Routes = {
@@ -119,9 +136,15 @@ export default function App() {
             <div>
                 <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
                 <Resources general={general} war={war}/>
-                <Main general={general}
-                      war={war}
-                      logout={logout}/>
+                <div className="flex flex-wrap">
+                    <ArmyStatus armies={armies}
+                                incomingArmies={incomingArmies}
+                    />
+                    <MyUnits general={general}
+                             myUnits={armyUnits}
+                             logout={logout}
+                    />
+                </div>
             </div>,
         "/register": () =>
             <div>

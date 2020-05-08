@@ -56,7 +56,7 @@ const Register = ({registerNewUser, existingUser}) => {
 
                 <div className="pa2 bg-black-80 flex flex-wrap">
                     <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
-                        <input type="radio" name="race" value="HUMAN" onChange={e => onRaceChange(e.currentTarget.value)}/> Human
+                        <input type="radio" name="race" value="HUMAN"  onChange={e => onRaceChange(e.currentTarget.value)}/> Human
                     </label>
                     <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
                         <input type="radio" name="race" value="ELF" onChange={e => onRaceChange(e.currentTarget.value)}/> Elf

@@ -12,7 +12,7 @@ export default function Navigation({isAuthenticated, logout}) {
     ]
 
     const loggedInNavBarItems = [
-        {title: "Dashboard", location: "/", action: doNothing},
+        {title: "Dashboard", location: "/main", action: doNothing},
         {title: "Workers", location: "/workers", action: doNothing},
         {title: "Recruit Units", location: "/recruitunits", action: doNothing},
         {title: "Military Point", location: "/militarypoint", action: doNothing},
