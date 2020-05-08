@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {navigate} from 'hookrouter';
 
 export default function Navigation({isAuthenticated, logout,general,updateWar,updateGeneral,
-                                       updateArmies,updateIncomingArmies,updateOpponents}) {
+                                       updateArmies,updateIncomingArmies,updateOpponents,updateCombatLogs}) {
     const doNothing = () => {
 
     }
@@ -28,6 +28,13 @@ export default function Navigation({isAuthenticated, logout,general,updateWar,up
         }
     }
 
+    const refreshCombatLogs = () => {
+        if (!!general){
+            refreshCommonData();
+            updateCombatLogs(general.id);
+        }
+    }
+
     const loggedOutNavBarItems = [
         {title: "Home", location: "/", action: doNothing},
         {title: "Register", location: "/register", action: doNothing}
@@ -39,6 +46,7 @@ export default function Navigation({isAuthenticated, logout,general,updateWar,up
         {title: "Workers", location: "/workers", action: refreshCommonData},
         {title: "Recruit Units", location: "/recruitunits", action: refreshCommonData},
         {title: "Military Point", location: "/militarypoint", action: refreshOpponents},
+        {title: "Combat Logs", location: "/combatlogs", action: refreshCombatLogs},
         {title: "Logout", location: "/", action: logout}
     ]
     let navBar =[];

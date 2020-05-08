@@ -15,5 +15,8 @@ export const urls = {
     getWar: baseUrl + 'wars/1',
     putWorkerIntoResource: baseUrl + 'resources/',
     putBuyWorker:  baseUrl + 'resources/idle/',
-    getIncomingArmies: baseUrl + "combats/incoming/"
+    getIncomingArmies: baseUrl + "combats/incoming/",
+    getCombatLogsByGeneral: baseUrl + "combats/general/",
+    getCombatLog: baseUrl + "combats/log/"
+
 };

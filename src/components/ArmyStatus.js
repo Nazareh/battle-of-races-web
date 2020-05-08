@@ -1,7 +1,4 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {urls} from "./urls";
-import Login from "./Login";
+import React from "react";
 
 const ArmyStatus = ({armies, incomingArmies}) => {
 

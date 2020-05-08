@@ -3,7 +3,6 @@ import './App.css';
 import {navigate, useRoutes} from 'hookrouter';
 import axios from "axios";
 import Register from "../components/Register";
-import Main from "../components/Main";
 import {urls} from '../components/urls';
 import Particles from "react-particles-js";
 import Navigation from "../components/Navigation";
@@ -14,6 +13,7 @@ import RecruitUnits from "../components/RecruitUnits";
 import MilitaryPoint from "../components/MilitaryPoint/MilitaryPoint";
 import MyUnits from "../components/MyUnits";
 import ArmyStatus from "../components/ArmyStatus";
+import CombatLogs from "../components/CombatLogs";
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -24,13 +24,10 @@ export default function App() {
     const [war, setWar] = useState({});
     const [opponents,setOpponents] = useState([]);
     const [incomingArmies,setIncomingArmies]= useState([]);
+    const [combatLogs,setCombatLogs] = useState([])
 
 
     const [loading, setLoading] = useState(false);
-
-    // useEffect(() => {
-    //
-    // }, []);
 
     const particlesOptions = {
         particles: {
@@ -53,6 +50,7 @@ export default function App() {
         setOpponents([]);
         setIncomingArmies([]);
         setLoading(false);
+        setCombatLogs([]);
 
         navigate("/");
     }
@@ -69,6 +67,7 @@ export default function App() {
                         updateArmies(res.data.id);
                         updateOpponents(res.data.id);
                         updateIncomingArmies(res.data.id);
+                        updateCombatLogs(res.data.id);
 
                         navigate("/main")
                     } else {
@@ -125,6 +124,11 @@ export default function App() {
             .then(res => setIncomingArmies(res.data));
     };
 
+    const updateCombatLogs = (generalId) => {
+        axios.get(urls.getCombatLogsByGeneral + generalId)
+            .then(res => setCombatLogs(res.data));
+    };
+
     const navBar =  <Navigation isAuthenticated={isAuthenticated}
                                 logout={logout}
                                 general={general}
@@ -133,6 +137,7 @@ export default function App() {
                                 updateArmies={updateArmies}
                                 updateIncomingArmies={updateIncomingArmies}
                                 updateOpponents={updateOpponents}
+                                updateCombatLogs={updateCombatLogs}
     />;
     const particles = <Particles className="particles" params={particlesOptions}/>;
     const resources = <Resources general={general} war={war}/>;
@@ -194,6 +199,13 @@ export default function App() {
                                logout={logout}
                                opponents={opponents}
                 />
+            </div>,
+        "/combatlogs": () =>
+            <div>
+                {navBar}
+                {resources}
+                <CombatLogs combatLogs={combatLogs}
+                            logout={logout}/>
             </div>
 
     };
