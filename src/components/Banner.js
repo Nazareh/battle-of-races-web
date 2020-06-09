@@ -4,7 +4,7 @@ const Banner = ({text,  alertType}) => {
     switch (alertType) {
         case 'SUCCESS':
             return (
-                <div className="flex items-center justify-center pa4 bg-light-green navy">
+                <div className="flex items-center justify-center bg-light-green navy">
                     <svg className="w1" data-icon="info" viewBox="0 0 32 32" >
                         <title>info icon</title>
                         <path
@@ -16,7 +16,7 @@ const Banner = ({text,  alertType}) => {
             break;
         case 'ERROR':
             return (
-                <div className="flex items-center justify-center pa4 bg-light-red navy">
+                <div className="flex items-center justify-center bg-light-red navy">
                     <svg className="w1" data-icon="info" viewBox="0 0 32 32">
                         <title>info icon</title>
                         <path
