@@ -25,6 +25,7 @@ export default function App() {
     const [opponents,setOpponents] = useState([]);
     const [incomingArmies,setIncomingArmies]= useState([]);
     const [combatLogs,setCombatLogs] = useState([])
+    const [apiToken,setApiToken] = useState(null)
 
 
     const [loading, setLoading] = useState(false);
@@ -56,10 +57,15 @@ export default function App() {
     }
 
 
-    const login = (username) => {
-        axios.get(urls.getGeneralByName + username.username)
+    const login = (username,password) => {
+        axios.get(urls.login,{
+            username,
+            password
+        } )
             .then(res => {
                     if (!!res.data) {
+                        setApiToken(res.data);
+
                         setIsAuthenticated(true);
                         setLoading(true);
                         updateGeneral(res.data.id);
@@ -78,7 +84,8 @@ export default function App() {
     }
 
     const registerNewUser = (newUser) => {
-        axios.post(urls.postNewGeneral, newUser)
+        console.log(newUser);
+        axios.post(urls.register, newUser)
             .then(response => {
                 navigate("/");
             })

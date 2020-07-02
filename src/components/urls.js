@@ -17,6 +17,9 @@ export const urls = {
     putBuyWorker:  baseUrl + 'resources/idle/',
     getIncomingArmies: baseUrl + "combats/incoming/",
     getCombatLogsByGeneral: baseUrl + "combats/general/",
-    getCombatLog: baseUrl + "combats/log/"
+    getCombatLog: baseUrl + "combats/log/",
+    login:'http://localhost:8080/login',
+    logout:'http://localhost:8080/logout',
+    register:'http://localhost:8080/register',
 
 };
