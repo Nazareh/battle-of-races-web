@@ -25,10 +25,9 @@ export default function App() {
     const [opponents,setOpponents] = useState([]);
     const [incomingArmies,setIncomingArmies]= useState([]);
     const [combatLogs,setCombatLogs] = useState([])
-    const [apiToken,setApiToken] = useState(null)
-
-
     const [loading, setLoading] = useState(false);
+    const [token, setToken] = useState(null);
+    axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
 
     const particlesOptions = {
         particles: {
@@ -52,35 +51,38 @@ export default function App() {
         setIncomingArmies([]);
         setLoading(false);
         setCombatLogs([]);
-
+        if (!!general) {
+            console.log(general.name);
+            axios.post(urls.logout + general.name)
+        }
         navigate("/");
     }
 
 
-    const login = (username,password) => {
-        axios.get(urls.login,{
-            username,
-            password
-        } )
+    const login = (credentials) => {
+        axios.post(urls.login,credentials)
             .then(res => {
                     if (!!res.data) {
-                        setApiToken(res.data);
-
-                        setIsAuthenticated(true);
-                        setLoading(true);
-                        updateGeneral(res.data.id);
-                        updateWar();
-                        updateArmies(res.data.id);
-                        updateOpponents(res.data.id);
-                        updateIncomingArmies(res.data.id);
-                        updateCombatLogs(res.data.id);
-
-                        navigate("/main")
+                        setToken(res.data);
+                        axios.get(urls.getGeneralByName + credentials.username)
+                            .then(res => {
+                                setIsAuthenticated(true);
+                                setLoading(true);
+                                updateGeneral(res.data.id);
+                                updateWar();
+                                updateArmies(res.data.id);
+                                updateOpponents(res.data.id);
+                                updateIncomingArmies(res.data.id);
+                                updateCombatLogs(res.data.id);
+                                navigate("/main")
+                            })
+                            .catch(err => console.log(err))
                     } else {
                         alert('Username does not exist');
                     }
                 }
             )
+            .catch(err => console.log(err));
     }
 
     const registerNewUser = (newUser) => {
@@ -160,13 +162,13 @@ export default function App() {
             <div>
                 {navBar}
                 {resources}
-                <div className="flex flex-wrap">
-                    <ArmyStatus armies={armies}
-                                incomingArmies={incomingArmies}
-                    />
+                <div className="flex justify-around">
                     <MyUnits general={general}
                              myUnits={armyUnits}
                              logout={logout}
+                    />
+                    <ArmyStatus armies={armies}
+                                incomingArmies={incomingArmies}
                     />
                 </div>
             </div>,

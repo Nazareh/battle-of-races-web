@@ -19,7 +19,7 @@ export const urls = {
     getCombatLogsByGeneral: baseUrl + "combats/general/",
     getCombatLog: baseUrl + "combats/log/",
     login:'http://localhost:8080/login',
-    logout:'http://localhost:8080/logout',
+    logout:'http://localhost:8080/logout/',
     register:'http://localhost:8080/register',
 
 };

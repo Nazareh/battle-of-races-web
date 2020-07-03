@@ -38,14 +38,14 @@ const MyUnits = ({general, myUnits,logout}) =>{
         return (<div></div>)
     }
     return(
-    <div className="measure-narrow pa3 white ">
+    <div className="measure-narrow pa3 bg-black-10 white ">
         <p className="f3 tc">All Units</p>
         <div className="flex flex-row">
             <div className="pa4 outline center overflow-auto">
                 <table className="f6 w20 mw8 left white" cellSpacing="0">
                     <thead>
                     <tr>
-                        {/*<th className="fw6 bb tl pb3 pr3 b--transparent ">Unit</th>*/}
+                        <th className="fw6 bb tl pb3 pr3 b--transparent ">Unit</th>
                         <th className="fw6 bb tl pb3 pr3 b--transparent">Quantity</th>
                     </tr>
                     </thead>

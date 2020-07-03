@@ -28,7 +28,7 @@ const GeneralCard = ({opponentId, name, action, armyId}) => {
     }
 
     return (
-        <div className='tc white bg-black-80 dib br1 pa1 ma1 grow bw1 shadow-5'>
+        <div className='tc white bg-black-80 dib br1 pa1 ma1 grow bw1 shadow-5 bg-black-30'>
             <div>
                 <h3>{name}</h3>
                 <input

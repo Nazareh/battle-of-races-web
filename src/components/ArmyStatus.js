@@ -59,12 +59,12 @@ const ArmyStatus = ({armies, incomingArmies}) => {
         }
 
         return (
-            <div className="measure-narrow mh1 pa1 white ">
+            <div className="measure-narrow mh1 pa1 white bg-black-10  ">
                 <p className="f3 tc">{title}</p>
                 <table className="f6 w20 mw8 left white" cellSpacing="0">
                     <thead>
                     <tr>
-                        <th className="fw6 bb tl pb3 pr3 b--transparent">STATUS</th>
+                        <th className="fw6 bb tl pb3 pr3 b--transparent">Status</th>
                         <th className="fw6 bb tl pb3 pr3 b--transparent">{headerLabel}</th>
                         <th className="fw6 bb tl pb3 pr3 b--transparent">Units</th>
                     </tr>

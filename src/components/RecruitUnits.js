@@ -96,23 +96,27 @@ const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits,logout}) 
                         document.getElementById(element.unit.id).max = unitsList[index].maxQty;
                     }
                 } else {
+                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
                     estResources.food = estResources.food - (element.unit.food * element.qty);
                     estResources.wood = estResources.wood - (element.unit.wood * element.qty);
                     estResources.gold = estResources.gold - (element.unit.gold * element.qty);
-                    unitsList[index].maxQty = calculateMaxRecruitByUnit(element.unit, estResources);
+                    console.log(unitsList[index].maxQty,element.unit.name)
                 }
             });
     }
 
     const handleSubmit = () => {
         const armyUnitsList = [];
-        unitsList.forEach(element => armyUnitsList.push({
-            id: {
-                unitId: element.unit.id,
-                armyId: armies[0].id
-            },
-            qty: element.qty
-        }));
+        unitsList.forEach(element => {
+            console.log(element,"oirr",calculateMaxRecruitByUnit(element.unit, general.resources))
+            armyUnitsList.push({
+                id: {
+                    unitId: element.unit.id,
+                    armyId: armies[0].id
+                },
+                qty: Math.min(element.qty,element.maxQty)
+            })
+        });
 
         axios.post(urls.postArmyUnits, armyUnitsList)
             .then(response => {
@@ -122,11 +126,19 @@ const RecruitUnits = ({general, updateGeneral, armies, updateArmyUnits,logout}) 
                 });
                 updateGeneral(general.id);
                 updateArmyUnits(armies);
+                updatePlaceholders();
             });
     };
 
+    if(!general){
+        logout();
+        return (
+            <div></div>
+        )
+    }
+
     return (
-        <div className='white flex flex-column center w-100 ph4'>
+        <div className='white flex flex-column center w-100 ph4 bg-black-10'>
             <p className="f3 tc ">Recruit units</p>
             <div className='center w-100 outline'>
                 <div className='flex flex-wrap w-100'>

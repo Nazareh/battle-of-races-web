@@ -23,7 +23,7 @@ const MilitaryPoint = ({general, armies,logout,opponents}) => {
     }
 
     return (
-        <div className="center measure-wide">
+        <div className="center measure-wide bg-black-10">
             <p className="f3 tc white">Military Point</p>
             <div className='flex flex-wrap justify-start'>
 

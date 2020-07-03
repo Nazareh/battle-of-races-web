@@ -3,14 +3,14 @@ import Banner from "./Banner";
 
 const Register = ({registerNewUser, existingUser}) => {
     const [user,setUser] = useState({
-        name: null,
+        username: null,
         email: null,
         password: null,
         race: null}
         );
 
     const onUsernameChange = (value) => {
-        user.name = value;
+        user.username = value;
     }
     const onEmailChange = (value) => {
         user.email = value;

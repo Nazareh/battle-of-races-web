@@ -22,14 +22,14 @@ const Workers = ({general, updateGeneral, logout}) => {
         setCurrency(event.target.value);
 
     }
-    if(general === null){
+    if(!general){
         logout();
         return (
             <div></div>
         )
     }
     return (
-        <div className="white measure center flex flex-column pa4">
+        <div className="white measure center flex flex-column pa4 bg-black-10 ">
             <p className="f3 tc"> Workers</p>
             <div className="outline pa1 flex flex-column justify-start">
                 <div className="flex ma3 flex-row">
@@ -51,7 +51,7 @@ const Workers = ({general, updateGeneral, logout}) => {
                         className="bg-black-80 white bg-animate no-underline ph1 ma1 ba h2 b--white-20"
                         id="currency"
                         onClick={event => setCurrencyToUse(event)}>
-                        <option defaultValue="FOOD">Food</option>
+                        <option value="FOOD" selected="true">Food</option>
                         <option value="WOOD">Wood</option>
                         <option value="GOLD">Gold</option>
                     </select>
