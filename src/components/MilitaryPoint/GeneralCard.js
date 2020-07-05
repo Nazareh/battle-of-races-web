@@ -15,7 +15,7 @@ const GeneralCard = ({opponentId, name, action, armyId}) => {
             },
             turnsDuration: 1
         }
-        axios.post(urls.postCombat, combatRequest)
+        axios.post(urls.postCombatRequest, combatRequest)
             .then(response => {
                 if (response.status === 201) {
                     alert('Army has been sent')

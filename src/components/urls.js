@@ -11,7 +11,7 @@ export const urls = {
     postArmyUnits: baseUrl + 'armyunits',
     getArmyUnitsByArmy: baseUrl + 'armyunits/',
     getOpponentes: baseUrl + 'generals/opponents/',
-    postCombat: baseUrl +  'combats',
+    postCombatRequest: baseUrl +  'combats/request',
     getWar: baseUrl + 'wars/1',
     putWorkerIntoResource: baseUrl + 'resources/',
     putBuyWorker:  baseUrl + 'resources/idle/',
@@ -21,5 +21,4 @@ export const urls = {
     login:'http://localhost:8080/login',
     logout:'http://localhost:8080/logout/',
     register:'http://localhost:8080/register',
-
 };
