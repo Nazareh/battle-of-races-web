@@ -58,7 +58,6 @@ export default function App() {
         navigate("/");
     }
 
-
     const login = (credentials) => {
         axios.post(urls.login,credentials)
             .then(res => {
@@ -151,6 +150,45 @@ export default function App() {
     const particles = <Particles className="particles" params={particlesOptions}/>;
     const resources = <Resources general={general} war={war}/>;
 
+   const tempUnits =
+       [
+           {
+               "id": 1,
+               "race": "HUMAN",
+               "category": "FRL",
+               "name": "Guerreiro",
+               "tgt1": "FRL",
+               "tgt2": "ART",
+               "tgt3": null,
+               "initiative": 20,
+               "attack": 9,
+               "defense": 13,
+               "strikes": 1,
+               "life": 0,
+               "gold": 40,
+               "wood": 15,
+               "food": 15,
+               "speed": 0
+           },
+       {
+           "id": 2,
+           "race": "HUMAN",
+           "category": "FRL",
+           "name": "Lanceiro",
+           "tgt1": "CAV",
+           "tgt2": "FRL",
+           "tgt3": "INF",
+           "initiative": 17,
+           "attack": 12,
+           "defense": 9,
+           "strikes": 1,
+           "life": 0,
+           "gold": 5,
+           "wood": 40,
+           "food": 50,
+           "speed": 0
+       }]
+
     const Routes = {
         "/": () =>
             <div>
@@ -192,10 +230,9 @@ export default function App() {
             <div>
                 {navBar}
                 {resources}
-                <RecruitUnits general={general}
-                              updateGeneral={updateGeneral}
-                              armies={armies}
-                              updateArmyUnits={updateArmyUnits}
+                <RecruitUnits units={tempUnits}
+                              recruitUnits={updateArmyUnits}
+                              resources={general}
                               logout={logout}
                 />
             </div>,

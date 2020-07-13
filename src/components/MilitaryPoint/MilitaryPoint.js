@@ -23,12 +23,11 @@ const MilitaryPoint = ({general, armies,logout,opponents}) => {
     }
 
     return (
-        <div className="center measure-wide bg-black-10">
-            <p className="f3 tc white">Military Point</p>
-            <div className='flex flex-wrap justify-start'>
-
-                <label className="db white fw6 lh-copy f6" htmlFor="searchBox"> Search by name</label>
-                <input className="pa2 input-reset ba bg-black-80 white w-100"
+        <div className="measure center mv5 flex flex-column pa4 bg-black-70">
+            <p className="f3 tc">Military Point</p>
+            <div className='flex flex-wrap'>
+                <label className="db fw6 lh-copy f6" htmlFor="searchBox"> Search by name</label>
+                <input className="pa2 input-reset ba w-100"
                        type="text"
                        name="searchBox"
                        value={searchField}

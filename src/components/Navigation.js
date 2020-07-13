@@ -66,7 +66,7 @@ export default function Navigation({isAuthenticated, logout,general,updateWar,up
                         navigate(value.location);
                         value.action();
                     }}
-                       className="f6 link dib white fw6 dim mr3 mr4-ns pointer">{value.title}</a>
+                       className="f6 link dib fw6 dim mr3 mr4-ns pointer">{value.title}</a>
                 </div>)
         );
     return (

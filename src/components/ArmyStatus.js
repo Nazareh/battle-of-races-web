@@ -59,9 +59,9 @@ const ArmyStatus = ({armies, incomingArmies}) => {
         }
 
         return (
-            <div className="measure-narrow mh1 pa1 white bg-black-10  ">
+            <div className="measure-narrow ">
                 <p className="f3 tc">{title}</p>
-                <table className="f6 w20 mw8 left white" cellSpacing="0">
+                <table className="f6 w20 mw8 left pa3" cellSpacing="0">
                     <thead>
                     <tr>
                         <th className="fw6 bb tl pb3 pr3 b--transparent">Status</th>
@@ -81,7 +81,7 @@ const ArmyStatus = ({armies, incomingArmies}) => {
     }
 
     return (
-        <div className=" flex flex-wrap">
+        <div className=" flex flex-wrap center mv5 bg-black-70 ">
             {renderArmy(armies[0], "My army")}
             {incomingArmies.map(army => renderArmy(army, army.generalName))}
 

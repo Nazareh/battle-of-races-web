@@ -28,31 +28,31 @@ const Register = ({registerNewUser, existingUser}) => {
     }
 
     return (
-        <main className="black-80">
+        <main>
             {!!existingUser ? <Banner text={'Username or email already in use. Please choose another!'}
                                       alertType={'ERROR'}
             /> : <div></div>}
             <form onSubmit={onSubmit}
-                  className="measure center white pa3 shadow-5">
+                  className="measure center pa3 bg-black-70 mv5 shadow-5">
                 <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                     <legend className="f2 fw6 ph0 mh0">Register</legend>
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="username">Username</label>
-                        <input className="pa2 input-reset ba bg-black-80 hover-white white w-100"
+                        <input className="pa2 input-reset ba w-100"
                                type="text" name="username" id="username" required
                                onChange={e => onUsernameChange(e.target.value)}
                         />
                     </div>
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                        <input className="pa2 input-reset ba bg-black-80 hover-white white w-100"
+                        <input className="pa2 input-reset ba w-100"
                                type="email" name="email-address" id="email-address"
                                onChange={e => onEmailChange(e.target.value)}
                         />
                     </div>
                     <div className="mv3">
                         <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                        <input className="b pa2 input-reset bg-black-80 ba hover-white white  w-100"
+                        <input className="b pa2 input-reset ba w-100"
                                type="password" name="password" id="password"
                                required
                                onChange={e => onPasswordChange(e.target.value)}
@@ -60,8 +60,10 @@ const Register = ({registerNewUser, existingUser}) => {
                     </div>
                 </fieldset>
 
-                <div className="pa2 bg-black-80 flex flex-wrap">
-                    <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
+                <label classname = "db fw6 lh-copy f6" htmlFor="race-radio">Race</label>
+                <div className="pa2 flex flex-wrap" id="race-radio">
+
+                    <label className="f6 pa2 dib grow bg-animate b--transparent pv2 ph4 w-20">
                         <input required type="radio" name="race" value="HUMAN"  onChange={e => onRaceChange(e.currentTarget.value)}/> Human
                     </label>
                     <label className="f6 pa2 dib grow white bg-animate b--transparent pv2 ph4 w-20">
@@ -83,10 +85,8 @@ const Register = ({registerNewUser, existingUser}) => {
                 </div>
                 <div>
                     <button
-                        className="mv3 f6 dib bg-black-80 grow white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
+                        className="mv3 f6 dib bg-dark-green grow white-90 bg-animate hover-green no-underline pv2 ph4 br-pill ba b--white-20"
                         type="submit"
-                        // value="Register"
-                        // onClick={(e) => onSubmit()}
                     >Register</button>
                 </div>
             </form>

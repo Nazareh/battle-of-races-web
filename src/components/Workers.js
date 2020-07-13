@@ -29,9 +29,9 @@ const Workers = ({general, updateGeneral, logout}) => {
         )
     }
     return (
-        <div className="white measure center flex flex-column pa4 bg-black-10 ">
+        <div className="measure center mv5 flex flex-column pa4 bg-black-70 ">
             <p className="f3 tc"> Workers</p>
-            <div className="outline pa1 flex flex-column justify-start">
+            <div className="pa1 flex flex-column justify-start">
                 <div className="flex ma3 flex-row">
                     <p className="dib ma1">Idle:</p>
                     <p className="dib ma1">{general.resources.idleWorkers}</p>
@@ -48,7 +48,7 @@ const Workers = ({general, updateGeneral, logout}) => {
                             , 2)}
                     </p>
                     <select
-                        className="bg-black-80 white bg-animate no-underline ph1 ma1 ba h2 b--white-20"
+                        className="bg-animate no-underline ph1 ma1 ba h2 b--white-20"
                         id="currency"
                         onClick={event => setCurrencyToUse(event)}>
                         <option value="FOOD" selected="true">Food</option>
@@ -56,16 +56,16 @@ const Workers = ({general, updateGeneral, logout}) => {
                         <option value="GOLD">Gold</option>
                     </select>
                     <input
-                        className="f6 bg-black-80 grow white bg-animate ma1 hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
-                        type="submit" value="BUY"
+                        className="f6 dib bg-dark-green ma3 grow white-90 bg-animate hover-bg-green no-underline pv2 ph4 br-pill ba b--white-20"
+                        type="submit" value="Buy"
                         onClick={() => buyWorker()}
                     />
                 </div>
             </div>
-            <div className="outline flex flex-row">
+            <div className="flex flex-row">
                 <input
-                    className="f6 dib bg-black-80 grow ma3 white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
-                    type="submit" value="ADD"
+                    className="f6 dib bg-dark-green ma3 grow white-90 bg-animate hover-bg-green no-underline pv2 ph4 br-pill ba b--white-20"
+                    type="submit" value="Add"
                     onClick={() => addWorkerToResource("FOOD")}
                 />
                 <p className="pa1">On Food</p>
@@ -73,10 +73,10 @@ const Workers = ({general, updateGeneral, logout}) => {
                 <p className="pa1">Current Production</p>
                 <p className="pa1">{general.resources.foodProduction}</p>
             </div>
-            <div className="outline flex flex-row">
+            <div className="flex flex-row">
                 <input
-                    className="f6 dib bg-black-80 grow ma3 white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
-                    type="submit" value="ADD"
+                    className="f6 dib bg-dark-green ma3 grow white-90 bg-animate hover-bg-green no-underline pv2 ph4 br-pill ba b--white-20"
+                    type="submit" value="Add"
                     onClick={() => addWorkerToResource('WOOD')}
                 />
                 <p className="pa1">On Wood</p>
@@ -85,10 +85,10 @@ const Workers = ({general, updateGeneral, logout}) => {
                 <p className="pa1">{general.resources.woodProduction}</p>
 
             </div>
-            <div className="outline flex flex-row">
+            <div className="flex flex-row">
                 <input
-                    className="f6 dib bg-black-80 grow ma3 white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20"
-                    type="submit" value="ADD"
+                    className="f6 dib bg-dark-green ma3 grow white-90 bg-animate hover-bg-green no-underline pv2 ph4 br-pill ba b--white-20"
+                    type="submit" value="Add"
                     onClick={() => addWorkerToResource('GOLD')}
                 />
                 <p className="pa1">On Gold</p>
