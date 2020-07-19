@@ -14,6 +14,7 @@ import MilitaryPoint from "../components/MilitaryPoint/MilitaryPoint";
 import MyUnits from "../components/MyUnits";
 import ArmyStatus from "../components/ArmyStatus";
 import CombatLogs from "../components/CombatLogs";
+import Research from "../components/Research/Research";
 
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -252,6 +253,12 @@ export default function App() {
                 {resources}
                 <CombatLogs combatLogs={combatLogs}
                             logout={logout}/>
+            </div>,
+        "/research": () =>
+            <div>
+                {navBar}
+                {resources}
+                <Research logout={logout}/>
             </div>
 
     };

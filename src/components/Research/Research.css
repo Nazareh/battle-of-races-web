@@ -1,0 +1,5 @@
+#text-tree.Tree .Node {
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+}

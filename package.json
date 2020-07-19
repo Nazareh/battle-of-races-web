@@ -15,6 +15,7 @@
     "react-hook-form": "^5.6.3",
     "react-particles-js": "^3.2.0",
     "react-scripts": "3.3.1",
+    "react-tech-tree": "^0.7.0",
     "react-twitter-auth": "0.0.13"
   },
   "scripts": {

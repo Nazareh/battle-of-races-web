@@ -47,6 +47,7 @@ export default function Navigation({isAuthenticated, logout,general,updateWar,up
         {title: "Recruit Units", location: "/recruitunits", action: refreshCommonData},
         {title: "Military Point", location: "/militarypoint", action: refreshOpponents},
         {title: "Combat Logs", location: "/combatlogs", action: refreshCombatLogs},
+        {title: "Research", location: "/research", action: doNothing},
         {title: "Logout", location: "/", action: logout}
     ]
     let navBar =[];

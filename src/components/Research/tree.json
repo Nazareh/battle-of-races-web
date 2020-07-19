@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    [
+      { "name": "LDF", "id": "LDF", "disabled": "false"
+      },
+      { "name": "ART", "id": "ART" },
+      { "name": "CAV", "id": "CAV" }
+    ],
+    [
+      { "name": "INF", "id": "INF" },
+      { "name": "WIN", "id": "WIN" },
+      { "name": "PRO", "id": "PRO" }
+
+    ]
+  ],
+  "links": [
+    {
+      "from": "LDF", "to": "INF",
+      "style": { "stroke": "red"}
+    },
+    { "from": "ART", "to": "WIN"  },
+    { "from": "CAV", "to": "PRO" }
+  ]
+}
