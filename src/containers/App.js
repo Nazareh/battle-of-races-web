@@ -26,6 +26,7 @@ export default function App() {
     const [opponents,setOpponents] = useState([]);
     const [incomingArmies,setIncomingArmies]= useState([]);
     const [combatLogs,setCombatLogs] = useState([])
+    const [researchTree,setResearchTree] = useState([])
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(null);
     axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
@@ -74,6 +75,7 @@ export default function App() {
                                 updateOpponents(res.data.id);
                                 updateIncomingArmies(res.data.id);
                                 updateCombatLogs(res.data.id);
+                                updateResearchTree(res.data.id);
                                 navigate("/main")
                             })
                             .catch(err => console.log(err))
@@ -137,6 +139,19 @@ export default function App() {
         axios.get(urls.getCombatLogsByGeneral + generalId)
             .then(res => setCombatLogs(res.data));
     };
+
+    const updateResearchTree = (generalId) => {
+        axios.get(urls.getResearchTree + generalId)
+            .then(res => setResearchTree(res.data));
+    };
+
+    const doResearch = (researchType) => {
+        axios.post(urls.postDoResearch + general.id + "/" + researchType)
+            .then(res => {
+                setResearchTree(res.data);
+                updateGeneral(general.id);
+            });
+    }
 
     const navBar =  <Navigation isAuthenticated={isAuthenticated}
                                 logout={logout}
@@ -258,7 +273,10 @@ export default function App() {
             <div>
                 {navBar}
                 {resources}
-                <Research logout={logout}/>
+                <Research logout={logout}
+                          doResearch={doResearch}
+                          tree={researchTree}
+                />
             </div>
 
     };

@@ -13,6 +13,9 @@ const Resources = ({general,war,logout}) => {
                     <div className='pa3 gold'> Gold {general.resources.gold} </div>
                 </div>
                 <div className='ph3 fw1'>
+                    <p> Tech Points: {general.researchPoints} </p>
+                </div>
+                <div className='ph3 fw1'>
                     <p> XP: {general.xp} </p>
                 </div>
                 <div className='ph3 fw1'>

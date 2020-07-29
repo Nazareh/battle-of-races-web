@@ -18,6 +18,8 @@ export const urls = {
     getIncomingArmies: baseUrl + "combats/incoming/",
     getCombatLogsByGeneral: baseUrl + "combats/general/",
     getCombatLog: baseUrl + "combats/log/",
+    getResearchTree: baseUrl + "research/",
+    postDoResearch: baseUrl + "research/",
     login:'http://localhost:8080/login',
     logout:'http://localhost:8080/logout/',
     register:'http://localhost:8080/register',

@@ -15,7 +15,7 @@ const RecruitUnits = ({units, recruitUnits, resources, logout}) => {
     }
     return (
         <form onSubmit={recruitUnits}
-              className="measure center mv5 flex flex-column pa4 bg-black-70 shadow-5 ">
+              className="measure center mv5 flex flex-column pa4 bg-black-70 shadow-5">
             <div className="mv3 flex-row">
                 {units.map(unit =>
                     <div className="mt2">
