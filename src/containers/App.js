@@ -55,7 +55,6 @@ export default function App() {
         setLoading(false);
         setCombatLogs([]);
         if (!!general) {
-            console.log(general.name);
             axios.post(urls.logout + general.name)
         }
         navigate("/");
@@ -90,7 +89,6 @@ export default function App() {
     }
 
     const registerNewUser = (newUser) => {
-        console.log(newUser);
         axios.post(urls.register, newUser)
             .then(response => {
                 navigate("/");
@@ -125,6 +123,15 @@ export default function App() {
             .then(res => {
                 setArmyUnits(res.data);
             });
+    };
+
+    const recruitUnits = (units) => {
+        axios.post(urls.postArmyUnits, units)
+            .then(response => {
+                updateGeneral(general.id);
+            })
+            .catch(error => console.log(error))
+
     };
 
     const updateOpponents = (generalId) => {
@@ -216,8 +223,9 @@ export default function App() {
                 {navBar}
                 {resources}
                 <RecruitUnits units={availableUnits}
-                              recruitUnits={updateArmyUnits}
-                              resources={general}
+                              recruitUnits={recruitUnits}
+                              resources={!!general ? general.resources : null}
+                              armies={armies}
                               logout={logout}
                 />
             </div>,

@@ -16,7 +16,7 @@ const MyUnits = ({general, myUnits,logout}) =>{
 
 
     async function mountUnits() {
-        const response = await axios.get(urls.getUnitsByRace + general.race);
+        const response = await axios.get(urls.getAvailableUnits + general.id);
         myUnits
             .sort((a, b) => a.id.unitId - b.id.unitId)
             .forEach((element, index) => {
