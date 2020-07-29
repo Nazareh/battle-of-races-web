@@ -27,6 +27,7 @@ export default function App() {
     const [incomingArmies,setIncomingArmies]= useState([]);
     const [combatLogs,setCombatLogs] = useState([])
     const [researchTree,setResearchTree] = useState([])
+    const [availableUnits,setAvailableUnits] = useState([])
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(null);
     axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
@@ -76,6 +77,7 @@ export default function App() {
                                 updateIncomingArmies(res.data.id);
                                 updateCombatLogs(res.data.id);
                                 updateResearchTree(res.data.id);
+                                updateAvailableUnits(res.data.id);
                                 navigate("/main")
                             })
                             .catch(err => console.log(err))
@@ -150,8 +152,14 @@ export default function App() {
             .then(res => {
                 setResearchTree(res.data);
                 updateGeneral(general.id);
+                updateAvailableUnits(general.id);
             });
     }
+
+    const updateAvailableUnits = (generalId) => {
+        axios.get(urls.getAvailableUnits + generalId)
+            .then(res => setAvailableUnits(res.data));
+    };
 
     const navBar =  <Navigation isAuthenticated={isAuthenticated}
                                 logout={logout}
@@ -165,45 +173,6 @@ export default function App() {
     />;
     const particles = <Particles className="particles" params={particlesOptions}/>;
     const resources = <Resources general={general} war={war}/>;
-
-   const tempUnits =
-       [
-           {
-               "id": 1,
-               "race": "HUMAN",
-               "category": "FRL",
-               "name": "Guerreiro",
-               "tgt1": "FRL",
-               "tgt2": "ART",
-               "tgt3": null,
-               "initiative": 20,
-               "attack": 9,
-               "defense": 13,
-               "strikes": 1,
-               "life": 0,
-               "gold": 40,
-               "wood": 15,
-               "food": 15,
-               "speed": 0
-           },
-       {
-           "id": 2,
-           "race": "HUMAN",
-           "category": "FRL",
-           "name": "Lanceiro",
-           "tgt1": "CAV",
-           "tgt2": "FRL",
-           "tgt3": "INF",
-           "initiative": 17,
-           "attack": 12,
-           "defense": 9,
-           "strikes": 1,
-           "life": 0,
-           "gold": 5,
-           "wood": 40,
-           "food": 50,
-           "speed": 0
-       }]
 
     const Routes = {
         "/": () =>
@@ -246,7 +215,7 @@ export default function App() {
             <div>
                 {navBar}
                 {resources}
-                <RecruitUnits units={tempUnits}
+                <RecruitUnits units={availableUnits}
                               recruitUnits={updateArmyUnits}
                               resources={general}
                               logout={logout}
